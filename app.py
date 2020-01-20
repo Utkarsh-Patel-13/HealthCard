@@ -1,11 +1,10 @@
-import pymongo
+from pymongo import MongoClient
 from flask import Flask
-#from flask_pymongo import PyMongo
 
 app = Flask(__name__)
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-mydb = myclient["Health"]
-db = mydb["user"]
+client = MongoClient('localhost', 27017)
+mydb = client.Health
+db = mydb.user
 
 

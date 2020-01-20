@@ -1,6 +1,5 @@
 from os.path import expanduser
 import os
-from app import db
 
 
 class User():

@@ -34,10 +34,26 @@ def create_user(u_name, u_dob, u_gender, u_contact, u_aadhar):
         return "Failed to create user"
 
 
-def find_user_name():
+def find_user_name(u_name):
     '''
         Work in progress...
         Find user in database.
     '''
-    x = db.users.find_one({})
-    print(x.__str__())
+    user = db.find_one({'Name': u_name})
+    print(user.__str__())
+
+
+def find_user_by_id(u_id):
+    '''
+        Work in progress...
+        Find user in database by AadharNo.
+    '''
+    user = db.find_one({'AadharNo': u_id})
+    print(user.__str__())
+    return user
+
+
+def update_user(uid, u_pno):
+    db.update_one({'AadharNo': uid}, {"$set": {'ContactNo': u_pno}})
+
+
