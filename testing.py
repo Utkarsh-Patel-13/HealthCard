@@ -1,9 +1,9 @@
-from app import app, db
 from query.UserQuery import create_user, find_user_name, update_user
-from model.models import User
+from query.DoctorQuery import create_doctor
 
 
-user = create_user("Priyang", "2001-09-12", 'M', "9409481618", "123456789012")
+#user = create_user("Priyang", "2001-09-12", 'M', "9409481618", "123456789015")
+user = create_doctor("Priyang", 'M', "9409481618", "123456789015", "111112")
 print(user)
 
 #find_user_name("UHP")

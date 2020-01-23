@@ -13,12 +13,12 @@ class User():
     AadharNo = ""
     FileLoc = ""
 
-    def __init__(self, Name, DOB, Gender, ContactNo, AadharNo):
-        self.Name = Name
-        self.DOB = DOB
-        self.Gender = Gender
-        self.ContactNo = ContactNo
-        self.AadharNo = AadharNo
+    def __init__(self, name, dob, gender, contact_no, aadhar_no):
+        self.Name = name
+        self.DOB = dob
+        self.Gender = gender
+        self.ContactNo = contact_no
+        self.AadharNo = aadhar_no
         self.__hash__()
 
     def create_path_file(self):
@@ -43,9 +43,7 @@ class User():
             os.mkdir(user_folder)
 
         basic_file_path = os.path.join(user_folder, self.Id + "_basic.txt")
-        u_file = open(basic_file_path, "w")
-        u_file.write("I am %s \n" % self.Id)
-        u_file.close()
+        self.create_basic_file(basic_file_path)
         return user_folder
 
     def check_lengths(self):
@@ -56,9 +54,42 @@ class User():
         else:
             return "ok"
 
+    def create_basic_file(self, basic_file_path):
+        u_basic_file = open(basic_file_path, "w")
+        u_basic_file.write("I am %s \n\n\n" % self.Name)
+        u_basic_file.write("Blood Group: \n")
+        u_basic_file.write("Age: \n")
+        u_basic_file.write("Height: \n")
+        u_basic_file.write("Weight: \n")
+        u_basic_file.write("Allergies: \n")
+        u_basic_file.write("Special Notes: \n")
+        u_basic_file.close()
+
     def __hash__(self):
         self.Id = hash((self.Name, self.ContactNo, self.AadharNo))
         self.Id = abs(self.Id).__str__()
 
     def _repr_(self):
         return '<User {}, {}, {}, {}, {}>'.format(self.Id, self.Name, self.DOB, self.Gender, self.AadharNo)
+
+
+class Doctor():
+
+    Id = ""
+    CertificateNo = ""
+    Name = ""
+    Gender = ''
+    AadharNo = ""
+    ContactNo = ""
+    #HospitalAddress = ""
+
+    def __init__(self, name, gender, contact_no, aadhar_no, certificate_no):
+        self.Name = name
+        self.Gender = gender
+        self.ContactNo = contact_no
+        self.AadharNo = aadhar_no
+        self.CertificateNo = certificate_no
+        self.__hash__()
+
+    def check_lengths(self):
+        return "ok"

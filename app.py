@@ -4,7 +4,8 @@ from flask import Flask
 app = Flask(__name__)
 
 client = MongoClient('localhost', 27017)
-mydb = client.Health
-db = mydb.user
+health_db = client.Health
+db_user = health_db.user
+db_doc = health_db.doctor
 
 
