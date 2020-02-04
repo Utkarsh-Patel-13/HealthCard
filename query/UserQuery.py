@@ -24,11 +24,16 @@ def create_user(u_name, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emerg
         return "Failed to create user"
 
 
+# TODO: Improving finding functions
+
+
 def find_user_name(u_name):
+
     '''
         Work in progress...
         Find user in database.
     '''
+
     try:
         user = db_user.find_one({'Name': u_name})
         print(user.__str__())

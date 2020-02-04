@@ -6,7 +6,7 @@ from extrafuncs import check_aadhar_validity, check_contact_validity
 class Address():
     street1 = ""
     street2 = ""
-    city =""
+    city = ""
     state = ""
     zip = ""
 

@@ -6,7 +6,7 @@
 
     <body>
         
-        <form>
+        <form name="newpatient" action="." method="post">
 
             <div style="border: 3px solid black; padding: 15px;">
 
@@ -31,10 +31,10 @@
                 <br><br><br>
 
                 <label>Gender: </label>
-                <select value="gender" required>
-                    <option name="male" id="male">Male</option>
-                    <option name="female" id="female">Female</option>
-                    <option name="other" id="other">Other</option>
+                <select name="gender" required>
+                    <option name="male" id="male" value="M">Male</option>
+                    <option name="female" id="female" value="F">Female</option>
+                    <option name="other" id="other" value="O">Other</option>
                 </select>
 
                 <br><br><br>
@@ -50,10 +50,10 @@
                 <br><br><br>
 
                 <label>Address: </label><br>
-                <input type="text" name="street1" id="address" placeholder="Street Address" size="50"><br><br>
-                <input type="text" name="street2" id="address" placeholder="Street Address Line 2" size="50"><br><br>
-                <input type="text" name="city" id="address" placeholder="City"> &nbsp;&nbsp;&nbsp;
-                <input type="text" name="state" id="address" placeholder="State"> <br><br>
+                <input type="text" name="street1" id="st1" placeholder="Street Address" size="50"><br><br>
+                <input type="text" name="street2" id="st2" placeholder="Street Address Line 2" size="50"><br><br>
+                <input type="text" name="city" id="city" placeholder="City"> &nbsp;&nbsp;&nbsp;
+                <input type="text" name="state" id="state" placeholder="State"> <br><br>
                 <input type="text" name="zip" id="zip" placeholder="Area / Zip Code">
             
             </div>
@@ -67,18 +67,18 @@
                 <br><br><br>
 
                 <label>Emergency Contact: </label> <br>
-                <input type="text" name="ifirstname" id="ifname" placeholder="First Name" maxlength="15" required>
-                <input type="text" name="ilastname" id="ilname" placeholder="Last Name" maxlength="15" required>
+                <input type="text" name="efirstname" id="efname" placeholder="First Name" maxlength="15" required>
+                <input type="text" name="elastname" id="elname" placeholder="Last Name" maxlength="15" required>
 
                 <br><br><br>
 
                 <label>Relationship: </label> &nbsp;
-                <input type="text" name="relationship" id="irelation">
+                <input type="text" name="relationship" id="erelation">
                 
                 <br><br><br>
 
                 <label>Contact Number: </label>
-                <input type="text" name="contact" id="contact" required maxlength="10">
+                <input type="text" name="contact" id="econtact" required maxlength="10">
 
             </div>
 

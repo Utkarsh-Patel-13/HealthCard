@@ -5,6 +5,7 @@ from flask import request, render_template
 from extrafuncs import check_aadhar_validity
 from model.models import Address, Emergency
 
+"""
 add = Address("13 Prabhupark Society", "Radhanpur Road", "Mehsana", "Gujarat", "384002")
 emer = Emergency("Utkarsh", "Patel", "9586244772")
 user = create_user("Priyang", "2001-09-12", 'M', "9409481618", "123456789086", add, emer)
@@ -14,8 +15,9 @@ print(user)
 
 #find_user_name("UHP")
 #update_user("123456789023", "9586244772")
+"""
 
-'''
+"""
 @app.route('/')
 def index():
     return render_template('getAadhar.html')
@@ -25,7 +27,6 @@ def index():
 def getvalue():
     aadharNo = request.form['aadhar']
     validity = check_aadhar_validity(aadharNo)
-    print(aadharNo, validity)
     user = db_user.find_one({'AadharNo': aadharNo})
 
     if validity == -1:
@@ -40,5 +41,4 @@ def getvalue():
 
 if __name__ == '__main__':
     app.run()
-
-'''
+"""
