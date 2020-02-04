@@ -128,5 +128,6 @@ class Doctor():
         self.CertificateNo = certificate_no
         self.__hash__()
 
+    #complete check functions
     def check_lengths(self):
         return "ok"
