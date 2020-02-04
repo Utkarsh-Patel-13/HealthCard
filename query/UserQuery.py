@@ -3,12 +3,6 @@ from model.models import User
 from pymongo import errors
 
 
-def perturb_hash(key, n):
-    st = hash((key, n))
-    temp = abs(st).__str__()
-    return temp
-
-
 def create_user(u_name, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency):
     # creates new user in database
     new_user = User(u_name, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency)
@@ -18,7 +12,7 @@ def create_user(u_name, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emerg
         try:
             db_user.insert_one(new_user.__dict__)
             new_user.create_path_file()
-            return new_user.Name + " created with Id " + new_user.Id
+            return new_user.Name + " created with Id " + new_user.AadharNo
         except errors.DuplicateKeyError as e:
             return str("Duplicate Data........")
         except errors.PyMongoError as e:

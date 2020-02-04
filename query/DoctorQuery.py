@@ -3,12 +3,6 @@ from model.models import Doctor
 from pymongo import errors
 
 
-def perturb_hash(key, n):
-    st = hash((key, n))
-    temp = abs(st).__str__()
-    return temp
-
-
 def create_doctor(u_name, u_gender, u_contact, u_aadhar, u_certificate):
     # creates new user in database
     new_doc = Doctor(u_name, u_gender, u_contact, u_aadhar, u_certificate)
@@ -17,8 +11,8 @@ def create_doctor(u_name, u_gender, u_contact, u_aadhar, u_certificate):
     if check_str == "ok":
         try:
             db_doc.insert_one(new_doc.__dict__)
-            #new_doc.create_path_file()
-            return new_doc.Name + " created with Id " + new_doc.Id
+            # new_doc.create_path_file()
+            return new_doc.Name + " created with Id " + new_doc.AadharNo
         except errors.DuplicateKeyError as e:
             return str("Duplicate Data........")
         except errors.PyMongoError as e:
