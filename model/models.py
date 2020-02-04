@@ -1,5 +1,37 @@
 from os.path import expanduser
 import os
+from extrafuncs import check_aadhar_validity, check_contact_validity
+
+class Address():
+    street1 = ""
+    street2 = ""
+    city =""
+    state = ""
+    zip = ""
+
+    def __init__(self, s1, s2, ct, st, zp):
+        self.street1 = s1
+        self.street2 = s2
+        self.city = ct
+        self.state = st
+        self.zip = zp
+
+    def __repr__(self):
+        return '{}, {}, {}, {}, {}'.format(self.street1, self.street2, self.city, self.state, self.zip)
+
+
+class Emergency():
+    FirstName = ""
+    LastName = ""
+    ContactNo = ""
+
+    def __init__(self, fname, lname, cno):
+        self.FirstName = fname
+        self.LastName = lname
+        self.ContactNo = cno
+
+    def __repr__(self):
+        return '{}, {}, {}'.format(self.FirstName, self.LastName, self.ContactNo)
 
 
 class User():
@@ -13,12 +45,17 @@ class User():
     AadharNo = ""
     FileLoc = ""
 
-    def __init__(self, name, dob, gender, contact_no, aadhar_no):
+    Address = ""
+    EmergencyContact = ""
+
+    def __init__(self, name, dob, gender, contact_no, aadhar_no, address, emergency):
         self.Name = name
         self.DOB = dob
         self.Gender = gender
         self.ContactNo = contact_no
         self.AadharNo = aadhar_no
+        self.Address = address.__str__()
+        self.EmergencyContact = emergency.__str__()
         self.__hash__()
 
     def create_path_file(self):
@@ -46,10 +83,10 @@ class User():
         self.create_basic_file(basic_file_path)
         return user_folder
 
-    def check_lengths(self):
-        if len(self.ContactNo) != 10:
+    def check_validity(self):
+        if check_contact_validity(self.ContactNo) == 1:
             return "ContactNumber invalid..."
-        elif len(self.AadharNo) != 12:
+        elif check_contact_validity(self.AadharNo) == 1:
             return "AadharNo invalid..."
         else:
             return "ok"

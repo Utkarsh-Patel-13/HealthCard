@@ -9,11 +9,11 @@ def perturb_hash(key, n):
     return temp
 
 
-def create_user(u_name, u_dob, u_gender, u_contact, u_aadhar):
+def create_user(u_name, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency):
     # creates new user in database
-    new_user = User(u_name, u_dob, u_gender, u_contact, u_aadhar)
+    new_user = User(u_name, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency)
 
-    check_str = new_user.check_lengths()
+    check_str = new_user.check_validity()
     if check_str == "ok":
         try:
             db_user.insert_one(new_user.__dict__)
