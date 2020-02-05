@@ -83,9 +83,10 @@ class User():
         return user_folder
 
     def check_validity(self):
+
         if check_contact_validity(self.ContactNo) == -1:
             return "ContactNumber invalid..."
-        elif check_contact_validity(self.AadharNo) == -1:
+        elif check_aadhar_validity(self.AadharNo) == -1:
             return "AadharNo invalid..."
         else:
             return "ok"
@@ -125,7 +126,7 @@ class Doctor():
     def check_lengths(self):
         if check_contact_validity(self.ContactNo) == -1:
             return "ContactNumber invalid..."
-        elif check_contact_validity(self.AadharNo) == -1:
+        elif check_aadhar_validity(self.AadharNo) == -1:
             return "AadharNo invalid..."
         else:
             return "ok"

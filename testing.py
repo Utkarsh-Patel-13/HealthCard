@@ -4,18 +4,16 @@ from app import app, db_user
 from flask import request, render_template
 from extrafuncs import check_aadhar_validity
 from model.models import Address, Emergency
-
 """
 add = Address("13 Prabhupark Society", "Radhanpur Road", "Mehsana", "Gujarat", "384002")
 emer = Emergency("Utkarsh", "Patel", "9586244772")
-user = create_user("Priyang", "2001-09-12", 'M', "9409481618", "123456789086", add, emer)
+user = create_user("Priyang", "2001-09-12", 'M', "9409481618", "123456789123", add, emer)
 #user = create_doctor("Priyang", 'M', "9409481618", "123456789016", "111111")
 print(user)
 
-
-#find_user_name("UHP")
-#update_user("123456789023", "9586244772")
 """
+find_user_name("UHP")
+#update_user("123456789023", "9586244772")
 
 """
 @app.route('/')
