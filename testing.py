@@ -2,7 +2,7 @@ from query.UserQuery import create_user, find_user_name, update_user
 from query.DoctorQuery import create_doctor
 from app import app, db_user
 from flask import request, render_template
-from extrafuncs import check_aadhar_validity
+from extrafuncs import check_aadhar_validity, check_aadhar_in_DB
 from model.models import Address, Emergency
 
 """
@@ -27,13 +27,12 @@ def getvalue():
     if 'submit_aadhar' in request.form:
         aadharNo = request.form['aadhar']
         validity = check_aadhar_validity(aadharNo)
-        print(aadharNo, validity)
-        user = db_user.find_one({'AadharNo': aadharNo})
+        aadhar_exist = check_aadhar_in_DB(aadharNo)
 
         if validity == -1:
             txt = "Invalid Aadhar Number..."
             return render_template('getAadhar.html', msg=txt)
-        elif user is not None:
+        elif aadhar_exist is not None:
             txt = "Aadhar already registered..."
             return render_template('getAadhar.html', msg=txt)
         else:
@@ -52,7 +51,7 @@ def getvalue():
         street2 = request.form['street2']
         city = request.form['city']
         state = request.form['state']
-        zip = request.form['zip']
+        zip_code = request.form['zip']
 
         e_fname = request.form['efirstname']
         e_lname = request.form['elastname']
@@ -60,12 +59,11 @@ def getvalue():
         e_contact = request.form['econtact']
 
         name_list = [fname, mname, lname]
-        name = ','.join(name_list)
-        print(name)
+        u_name = ' '.join(name_list)
 
-        address_list = [street1, street2, city, state, zip]
-        address = ','.join(address_list)
-        print(address)
+        address = Address(street1, street2, city, state, zip_code)
+        emergency = Emergency(e_fname, e_lname, e_contact, e_rel)
+        create_user(u_name, dob, gender, contactNo, aadharNo, address, emergency)
 
         return render_template('test.html', contact=contactNo, aadhar=aadharNo)
 
@@ -76,22 +74,3 @@ def getvalue():
 if __name__ == '__main__':
     app.run()
 
-"""
-aadharNo = request.form['aadhar']
-        fname = request.form['fname']
-        mname = request.form['midname']
-        lname = request.form['lastname']
-        gender = request.form['gender']
-        dob = request.form['DOB']
-        conactNo = request.form['contactNo']
-
-        street1 = request.form['street1']
-        street2 = request.form['street2']
-        city = request.form['city']
-        state = request.form['state']
-        zip = request.form['zip']
-
-        address_list = [street1, street2, city, state, zip]
-        address = ','.join(address_list)
-        print(address)
-"""
