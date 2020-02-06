@@ -6,9 +6,8 @@
 
     <body>
         
-        <form name="newpatient" action="." method="post">
+        <form name="newPatient" action="" method="post">
 
-            <div style="border: 3px solid black; padding: 15px;">
 
                 Patient Information
 
@@ -24,17 +23,12 @@
                 <input type="text" name="lastname" id="lname" placeholder="Last Name" maxlength="15" required>
 
                 <br><br><br>
-                
-                <label>Email: </label>
-                <input type="email" name="email" id="email" size="40">
-                
-                <br><br><br>
 
                 <label>Gender: </label>
                 <select name="gender" required>
-                    <option name="male" id="male" value="M">Male</option>
-                    <option name="female" id="female" value="F">Female</option>
-                    <option name="other" id="other" value="O">Other</option>
+                    <option name="male" id="male">Male</option>
+                    <option name="female" id="female">Female</option>
+                    <option name="other" id="other">Other</option>
                 </select>
 
                 <br><br><br>
@@ -45,22 +39,18 @@
                 <br><br><br>
 
                 <label>Contact Number: </label>
-                <input type="text" name="contact" id="contact" required maxlength="10">
+                <input type="text" name="contactNo" id="contactNo" required maxlength="10">
 
                 <br><br><br>
 
                 <label>Address: </label><br>
-                <input type="text" name="street1" id="st1" placeholder="Street Address" size="50"><br><br>
-                <input type="text" name="street2" id="st2" placeholder="Street Address Line 2" size="50"><br><br>
-                <input type="text" name="city" id="city" placeholder="City"> &nbsp;&nbsp;&nbsp;
-                <input type="text" name="state" id="state" placeholder="State"> <br><br>
+                <input type="text" name="street1" id="address" placeholder="Street Address" size="50"><br><br>
+                <input type="text" name="street2" id="address" placeholder="Street Address Line 2" size="50"><br><br>
+                <input type="text" name="city" id="address" placeholder="City"> &nbsp;&nbsp;&nbsp;
+                <input type="text" name="state" id="address" placeholder="State"> <br><br>
                 <input type="text" name="zip" id="zip" placeholder="Area / Zip Code">
-            
-            </div>
 
             <br>
-
-            <div style="border: 3px solid black; padding: 15px;">
 
                 Emergency Contact Information
 
@@ -73,16 +63,16 @@
                 <br><br><br>
 
                 <label>Relationship: </label> &nbsp;
-                <input type="text" name="relationship" id="erelation">
-                
+                <input type="text" name="relation" id="relation">
+
                 <br><br><br>
 
                 <label>Contact Number: </label>
-                <input type="text" name="contact" id="econtact" required maxlength="10">
+                <input type="text" name="econtact" id="econtact" required maxlength="10">
 
-            </div>
+            <br><br><br>
 
-            <input type="submit" name="submit" value="Submit" id="submitBtn">&nbsp;&nbsp;
+            <input type="submit" name="submit_patient" value="Submit" id="submitBtn">&nbsp;&nbsp;
             <input type="reset" name="reset" value="Reset" id="resetBtn">&nbsp;&nbsp;
 
         </form>

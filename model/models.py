@@ -25,14 +25,16 @@ class Emergency():
     FirstName = ""
     LastName = ""
     ContactNo = ""
+    Relation = ""
 
-    def __init__(self, fname, lname, cno):
+    def __init__(self, fname, lname, cno, rel):
         self.FirstName = fname
         self.LastName = lname
         self.ContactNo = cno
+        self.Relation = rel
 
     def __repr__(self):
-        return '{}, {}, {}'.format(self.FirstName, self.LastName, self.ContactNo)
+        return '{}, {}, {}, {}'.format(self.FirstName, self.LastName, self.ContactNo, self.Relation)
 
 
 class User():
