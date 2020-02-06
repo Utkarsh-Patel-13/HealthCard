@@ -2,7 +2,7 @@ from query.UserQuery import create_user, find_user_name, update_user
 from query.DoctorQuery import create_doctor
 from app import app, db_user
 from flask import request, render_template
-from extrafuncs import check_contact_validity, check_aadhar_validity, check_aadhar_in_DB
+from validityfunctions import check_contact_validity, check_aadhar_validity, check_aadhar_in_DB
 from model.models import Address, Emergency
 from wtforms import Form, TextField, TextAreaField, validators, StringField, SubmitField, ValidationError
 

@@ -21,9 +21,21 @@ def check_contact_validity(contactNo):
     else:
         return 1
 
+
 def check_aadhar_in_DB(aadharNo):
     valid = db_user.find_one({'AadharNo': aadharNo})
     if valid is not None:
         return 1
     else:
         return -1
+
+
+def check_zip_code(zip_code):
+
+    result = re.search('[\D]', zip_code)
+
+    if len(zip_code) is not 6 and result is not None:
+        return -1
+    else:
+        return 1
+

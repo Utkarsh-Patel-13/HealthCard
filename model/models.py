@@ -1,6 +1,6 @@
 from os.path import expanduser
 import os
-from extrafuncs import check_aadhar_validity, check_contact_validity
+from validityfunctions import check_aadhar_validity, check_contact_validity, check_zip_code
 
 
 class Address():
@@ -125,7 +125,7 @@ class Doctor():
         self.AadharNo = aadhar_no
         self.CertificateNo = certificate_no
 
-    def check_lengths(self):
+    def validity_check(self):
         if check_contact_validity(self.ContactNo) == -1:
             return "ContactNumber invalid..."
         elif check_aadhar_validity(self.AadharNo) == -1:
