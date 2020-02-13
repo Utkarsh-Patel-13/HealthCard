@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title></title>
+    </head>
+    <body>
+        <form action="" method="POST">
+
+            Username: <input type="text" name="username" placeholder="username" value="{{request.form.username}}">
+            <br><br><br>
+            Password: <input type="password" name="password" value="{{request.form.password}}">
+
+            <br><br>
+
+            <input type="submit" value="Submit">
+
+        </form>
+
+        
+        <p class="error">{{ error }}</p>
+        
+    </body>
+</html>

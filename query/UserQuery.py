@@ -1,4 +1,4 @@
-from app import db_user
+from databaseConnections import db_user
 from model.models import User
 from pymongo import errors
 
@@ -6,6 +6,8 @@ from pymongo import errors
 def create_user(u_name, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency):
     # creates new user in database
     new_user = User(u_name, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency)
+
+    # TODO: raise exception if user not created, return user_id if user created successfully.
 
     check_str = new_user.check_validity()
     if check_str == "ok":

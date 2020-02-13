@@ -1,4 +1,4 @@
-from app import db_doc
+from databaseConnections import db_doc
 from model.models import Doctor
 from pymongo import errors
 

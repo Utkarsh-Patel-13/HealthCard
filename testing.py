@@ -1,7 +1,7 @@
 from query.UserQuery import create_user, find_user_name, update_user
 from query.DoctorQuery import create_doctor
-from app import app, db_user
-from flask import request, render_template
+from databaseConnections import db_user
+from flask import Flask, request, render_template
 from validityfunctions import check_aadhar_validity, check_aadhar_in_DB
 from model.models import Address, Emergency
 
@@ -16,6 +16,7 @@ print(user)
 #find_user_name("Priyang")
 #update_user("123456789023", "9586244772")
 
+app = Flask(__name__)
 
 @app.route('/')
 def index():

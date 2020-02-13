@@ -1,5 +1,5 @@
 import re
-from app import db_user
+from databaseConnections import db_user
 
 
 def check_aadhar_validity(aadharNo):

@@ -3,12 +3,7 @@ import os
 from validityfunctions import check_aadhar_validity, check_contact_validity, check_zip_code
 
 
-class Address():
-    street1 = ""
-    street2 = ""
-    city = ""
-    state = ""
-    zip = ""
+class Address:
 
     def __init__(self, s1, s2, ct, st, zp):
         self.street1 = s1
@@ -21,11 +16,7 @@ class Address():
         return '{}, {}, {}, {}, {}'.format(self.street1, self.street2, self.city, self.state, self.zip)
 
 
-class Emergency():
-    FirstName = ""
-    LastName = ""
-    ContactNo = ""
-    Relation = ""
+class Emergency:
 
     def __init__(self, fname, lname, cno, rel):
         self.FirstName = fname
@@ -37,18 +28,8 @@ class Emergency():
         return '{}, {}, {}, {}'.format(self.FirstName, self.LastName, self.ContactNo, self.Relation)
 
 
-class User():
+class User:
     # User Table
-
-    Name = ""
-    DOB = ""
-    Gender = ''
-    ContactNo = ""
-    AadharNo = ""
-    FileLoc = ""
-
-    Address = ""
-    EmergencyContact = ""
 
     def __init__(self, name, dob, gender, contact_no, aadhar_no, address, emergency):
         self.Name = name
@@ -108,15 +89,8 @@ class User():
         return '<User {}, {}, {}, {}>'.format(self.Name, self.DOB, self.Gender, self.AadharNo)
 
 
-class Doctor():
+class Doctor:
     # Certificate Number verification left.
-
-    CertificateNo = ""
-    Name = ""
-    Gender = ''
-    AadharNo = ""
-    ContactNo = ""
-    # HospitalAddress = ""
 
     def __init__(self, name, gender, contact_no, aadhar_no, certificate_no):
         self.Name = name
