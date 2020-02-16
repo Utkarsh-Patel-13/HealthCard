@@ -3,9 +3,9 @@ from model.models import User
 from pymongo import errors
 
 
-def create_user(u_name, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency):
+def create_user(u_name, u_email, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency):
     # creates new user in database
-    new_user = User(u_name, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency)
+    new_user = User(u_name, u_email, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency)
 
     # TODO: raise exception if user not created, return user_id if user created successfully.
 
@@ -13,7 +13,7 @@ def create_user(u_name, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emerg
     if check_str == "ok":
         try:
             db_user.insert_one(new_user.__dict__)
-            new_user.create_path_file()
+            new_user.create_user_folder()
             return new_user.Name + " created with Id " + new_user.AadharNo
         except errors.DuplicateKeyError as e:
             return str("Duplicate Data........")

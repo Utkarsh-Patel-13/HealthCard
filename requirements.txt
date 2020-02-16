@@ -2,8 +2,11 @@ Click==7.0
 dnspython==1.16.0
 Flask==1.1.1
 itsdangerous==1.1.0
-Jinja2==2.10.3
+Jinja2==2.11.1
 MarkupSafe==1.1.1
+pdfkit==0.6.1
+pip-autoremove==0.9.1
 pymongo==3.10.1
-Werkzeug==0.16.0
+Werkzeug==1.0.0
+wkhtmltopdf==0.2
 WTForms==2.2.1

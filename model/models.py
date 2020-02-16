@@ -31,8 +31,9 @@ class Emergency:
 class User:
     # User Table
 
-    def __init__(self, name, dob, gender, contact_no, aadhar_no, address, emergency):
+    def __init__(self, name, email, dob, gender, contact_no, aadhar_no, address, emergency):
         self.Name = name
+        self.Email = email
         self.DOB = dob
         self.Gender = gender
         self.ContactNo = contact_no
@@ -40,24 +41,10 @@ class User:
         self.Address = address.__str__()
         self.EmergencyContact = emergency.__str__()
 
-    def create_path_file(self):
-        # create new file for user.
-        home_path = expanduser("~")
-        path_files_folder = os.path.join(home_path, "HealthServer", "PathFiles")
-        user_path_file = os.path.join(path_files_folder, self.AadharNo + ".txt")
-
-        if not os.path.exists(user_path_file):
-            u_file = open(user_path_file, "w")
-            self.FileLoc = user_path_file
-            u_data_files_folder = self.create_user_folder()
-            u_file.write(u_data_files_folder)
-            u_file.close()
-
     def create_user_folder(self):
         # create data folder for user
         home_path = expanduser("~")
-        folder_path = os.path.join(home_path, "HealthServer", "UserData")
-        user_folder = folder_path + "/" + self.AadharNo
+        user_folder = os.path.join(home_path, "HealthServer", "UserData", self.AadharNo)
         if not (os.path.exists(user_folder)):
             os.mkdir(user_folder)
 
