@@ -13,3 +13,12 @@ history of a patient which can be very useful in many situations.
 Users/Patients can see their data using the mobile app as well as web portal.
 
 The data is stored in a centralized database.
+
+
+###Tools and Technology Used:
+* MongoDB
+* Flask
+* Python
+* HTML, CSS, Bootstrap, JS
+* AndroidStudio
+* Flutter
