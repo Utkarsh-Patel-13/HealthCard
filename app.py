@@ -1,7 +1,5 @@
 import os
 from flask import Flask, render_template, redirect, url_for, request
-import dns
-
 import pdfkit
 from model.models import Emergency, Address
 from query.UserQuery import create_user

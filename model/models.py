@@ -59,7 +59,7 @@ class User:
         elif check_aadhar_validity(self.AadharNo) == -1:
             return "AadharNo invalid..."
         else:
-            return "ok"
+            return 1
 
     def create_basic_file(self, basic_file_path):
         u_basic_file = open(basic_file_path, "w")
