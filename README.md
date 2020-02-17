@@ -22,3 +22,7 @@ The data is stored in a centralized database.
 * HTML, CSS, Bootstrap, JS
 * AndroidStudio
 * Flutter
+
+
+*Python libraries used can be found in [requirements.txt](requirements.txt)* 
+
