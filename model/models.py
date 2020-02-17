@@ -76,7 +76,7 @@ class User:
         return '<User {}, {}, {}, {}>'.format(self.Name, self.DOB, self.Gender, self.AadharNo)
 
 
-class Doctor:
+class Doctor    :
     # Certificate Number verification left.
 
     def __init__(self, name, gender, contact_no, aadhar_no, certificate_no):

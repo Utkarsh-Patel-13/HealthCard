@@ -6,8 +6,7 @@ import pdfkit
 from model.models import Emergency, Address
 from query.UserQuery import create_user
 from validityfunctions import check_aadhar_validity, check_aadhar_in_DB
-from databaseConnections import db_login
-
+from databaseConnections import db_login, db_user
 
 app = Flask(__name__)
 
@@ -96,7 +95,26 @@ def login():
                 valid = True
 
         if user is not None and valid is True:
-            return render_template('test.html')
+            try:
+                user = db_user.find_one({'Email': username})
+
+                aadhar = user['AadharNo']
+                name = user['Name']
+                email = user['Email']
+                dob = user['DOB']
+                gender = user['Gender']
+                contact = user['ContactNo']
+                address = user['Address']
+
+                print(user.__str__())
+
+                return render_template('userProfile.html', aadhar=aadhar, name=name, email=email, dob=dob,
+                                       gender=gender,
+                                       contact=contact, address=address)
+            except Exception as e:
+                print(e.__str__())
+
+
         else:
             return render_template('login.html', error="Username/Password Incorrect")
 
