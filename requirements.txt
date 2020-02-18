@@ -10,3 +10,8 @@ pymongo==3.10.1
 Werkzeug==1.0.0
 wkhtmltopdf==0.2
 WTForms==2.2.1
+folium==0.8.3
+geopy==1.17.0
+ipython==5.5.0
+pandas==0.25.3
+spacy==2.1.9
