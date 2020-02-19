@@ -1,29 +1,20 @@
 from databaseConnections import db_user
-from model.models import User
+from model.models import User, Address, Emergency
 from pymongo import errors
 
 
-def create_user(u_name, u_email, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency):
+def create_user(Email, Name, AadharNo, ContactNo, Gender, DOB, Street1, Street2,
+                City, State, Zip, EmergencyContactName, EmergencyContactRelation, EmergencyContactNumber):
     # creates new user in database
-    new_user = User(u_name, u_email, u_dob, u_gender, u_contact, u_aadhar, u_address, u_emergency)
+    emergency = Emergency(EmergencyContactName, EmergencyContactRelation, EmergencyContactNumber)
+    address = Address(Street1, Street2, City, State, Zip)
+    new_user = User(Email=Email, Name=Name, AadharNo=AadharNo, ContactNo=ContactNo,
+                    Gender=Gender, DOB=DOB, Address=address.__repr__(), EmergencyContact=emergency.__repr__())
 
-    # TODO: raise exception if user not created, return user_id if user created successfully.
 
-    check_str = new_user.check_validity()
-    if check_str == 1:
-        try:
-            db_user.insert_one(new_user.__dict__)
-            new_user.create_user_folder()
-            return new_user.Name + " created with Id " + new_user.AadharNo
-        except errors.DuplicateKeyError as e:
-            return str("Duplicate Data........")
-        except errors.PyMongoError as e:
-            return str(e)
-        except Exception as e:
-            return str(e)
-    else:
-        print(check_str)
-        return "Failed to create user"
+    new_user.create_user_folder()
+
+    return new_user
 
 
 # TODO: Improving finding functions

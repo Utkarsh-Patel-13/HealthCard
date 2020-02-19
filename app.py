@@ -1,16 +1,106 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request
-import pdfkit
-from model.models import Emergency, Address
+from flask import Flask, render_template, redirect, url_for, request, session, flash
+
+from forms import RegistrationFormUser, LoginFormUser
+from model.models import Emergency, Address, User
 from query.UserQuery import create_user
-from validityfunctions import check_aadhar_validity, check_aadhar_in_DB
 from databaseConnections import db_login, db_user
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = b'\xb0\xf4\xe8\\U\x8d\xba\xb4B2h\x88\xf9\x08\xb1J'
+
 # client = MongoClient('localhost', 27017)
 
 
+@app.route('/')
+@app.route('/index')
+@app.route('/home')
+def index():
+    return render_template('index.html')
+
+
+@app.route('/newpatient', methods=["GET", "POST"])
+def newpatient():
+    if session.get('username'):
+        return redirect('/index')
+
+    form = RegistrationFormUser()
+
+    if form.validate_on_submit():
+        Email = form.Email.data
+        Password = form.Password.data
+        AadharNo = form.AadharNo.data
+        Name = form.Name.data
+        ContactNo = form.ContactNo.data
+        Gender = form.Gender.data
+        DOB = form.DOB.data
+        Street1 = form.Street1.data
+        Street2 = form.Street2.data
+        City = form.City.data
+        State = form.State.data
+        Zip = form.Zip.data
+        EmergencyContactName = form.EmergencyContactName.data
+        EmergencyContactRelation = form.EmergencyContactRelation.data
+        EmergencyContactNumber = form.EmergencyContactNumber.data
+
+        user = create_user(Email=Email, Name=Name, AadharNo=AadharNo,
+                           ContactNo=ContactNo, Gender=Gender, DOB=DOB,
+                           Street1=Street1, Street2=Street2, City=City, State=State, Zip=Zip,
+                           EmergencyContactName=EmergencyContactName, EmergencyContactRelation=EmergencyContactRelation,
+                           EmergencyContactNumber=EmergencyContactNumber)
+
+        user.set_password(Password)
+
+        try:
+            user.save()
+            flash("New ID Created Successfully", "success")
+            return redirect("/login_patient")
+        except Exception as e:
+            flash("Failed to create user, try again")
+            print(e)
+            return redirect('/newpatient')
+
+    return render_template('newpatient.html', form=form)
+
+
+@app.route('/newdoctor')
+def newdoctor():
+    return render_template('newdoctor.html')
+
+
+@app.route('/login_doc')
+def logind():
+    return render_template('login_doc.html')
+
+
+@app.route('/login_patient', methods=["GET", "POST"])
+def loginp():
+    if session.get('username'):
+        return redirect("/index")
+
+    form = LoginFormUser()
+    if form.validate_on_submit():
+        Email = form.Email.data
+        Password = form.Password.data
+
+        user = User.objects(Email=Email).first()
+        if user and user.get_password(Password):
+            # session['user_id'] = user.user_id
+            session['username'] = user.Name
+            return redirect("/index")
+        else:
+            flash("Incorrect username or password")
+    return render_template('login_patient.html', form=form)
+
+
+@app.route('/Doctor', methods=["GET", "POST"])
+def doctor():
+    return render_template('DOCTOR.html')
+
+
+
+"""
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
 def index():
@@ -152,7 +242,7 @@ def newPatient():
         return render_template('test.html', contact=contactNo, aadhar=aadharNo)
 
     return render_template("NewPatient.html")
-
+"""
 
 if __name__ == '__main__':
     app.run()

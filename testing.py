@@ -6,6 +6,8 @@ from validityfunctions import check_aadhar_validity, check_aadhar_in_DB
 from model.models import Address, Emergency
 from query.UserData import create_report
 
+from databaseConnections import db_user
+
 """
 add = Address("13 Prabhupark Society", "Radhanpur Road", "Mehsana", "Gujarat", "384002")
 emer = Emergency("Utkarsh", "Patel", "9586244772", "F")
@@ -21,3 +23,7 @@ print(x)
 #find_user_name("Priyang")
 #update_user("123456789023", "9586244772")
 """
+
+x = db_user.find()
+for i in x:
+    print(i['Email'])

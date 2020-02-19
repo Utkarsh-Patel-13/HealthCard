@@ -1,6 +1,6 @@
-#Swasthya Sahayak
+# Swasthya Sahayak
 
-###About:
+### About:
 Swasthya Sahayak is an application to keep record of healthcare related documents at one place.
 
 We have a web and an mobile platform to reach out to as many users as possible.
@@ -15,7 +15,7 @@ Users/Patients can see their data using the mobile app as well as web portal.
 The data is stored in a centralized database.
 
 
-###Tools and Technology Used:
+### Tools and Technology Used:
 * MongoDB
 * Flask
 * Python
@@ -23,6 +23,6 @@ The data is stored in a centralized database.
 * AndroidStudio
 * Flutter
 
-
+#### Additional Notes
 *Python libraries used can be found in [requirements.txt](requirements.txt)* 
 

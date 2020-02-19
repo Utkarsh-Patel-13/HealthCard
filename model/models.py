@@ -1,6 +1,7 @@
 from os.path import expanduser
 import os
-from validityfunctions import check_aadhar_validity, check_contact_validity, check_zip_code
+from mongoengine import Document, StringField, IntField
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class Address:
@@ -18,28 +19,26 @@ class Address:
 
 class Emergency:
 
-    def __init__(self, fname, lname, cno, rel):
-        self.FirstName = fname
-        self.LastName = lname
+    def __init__(self, name, cno, rel):
+        self.Name = name
         self.ContactNo = cno
         self.Relation = rel
 
     def __repr__(self):
-        return '{}, {}, {}, {}'.format(self.FirstName, self.LastName, self.ContactNo, self.Relation)
+        return '{}, {}, {}'.format(self.Name, self.ContactNo, self.Relation)
 
 
-class User:
+class User(Document):
     # User Table
-
-    def __init__(self, name, email, dob, gender, contact_no, aadhar_no, address, emergency):
-        self.Name = name
-        self.Email = email
-        self.DOB = dob
-        self.Gender = gender
-        self.ContactNo = contact_no
-        self.AadharNo = aadhar_no
-        self.Address = address.__str__()
-        self.EmergencyContact = emergency.__str__()
+    Email = StringField(unique=True)
+    Name = StringField()
+    Password = StringField()
+    Gender = StringField()
+    ContactNo = StringField()
+    AadharNo = StringField()
+    DOB = StringField()
+    Address = StringField()
+    EmergencyContact = StringField()
 
     def create_user_folder(self):
         # create data folder for user
@@ -52,14 +51,11 @@ class User:
         self.create_basic_file(basic_file_path)
         return user_folder
 
-    def check_validity(self):
+    def set_password(self, password):
+        self.Password = generate_password_hash(password)
 
-        if check_contact_validity(self.ContactNo) == -1:
-            return "ContactNumber invalid..."
-        elif check_aadhar_validity(self.AadharNo) == -1:
-            return "AadharNo invalid..."
-        else:
-            return 1
+    def get_password(self, password):
+        return check_password_hash(self.Password, password)
 
     def create_basic_file(self, basic_file_path):
         u_basic_file = open(basic_file_path, "w")
@@ -76,7 +72,7 @@ class User:
         return '<User {}, {}, {}, {}>'.format(self.Name, self.DOB, self.Gender, self.AadharNo)
 
 
-class Doctor    :
+class Doctor:
     # Certificate Number verification left.
 
     def __init__(self, name, gender, contact_no, aadhar_no, certificate_no):
