@@ -17,7 +17,7 @@ The data is stored in a centralized database.
 
 ### Tools and Technology Used:
 * MongoDB
-* Flask
+* Flask, Jinja2
 * Python
 * HTML, CSS, Bootstrap, JS
 * AndroidStudio
