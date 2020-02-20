@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <link rel="stylesheet" href="{{url_for('static',filename='bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='animate.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+    <link rel="icon" href="{{url_for('static',filename='service.png')}}" type="image/gif" sizes="16x16">
+
+    <title>Reports</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/simple-sidebar.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">ALL REPORTS</div>
+            <div class="list-group list-group-flush">
+                <a href="{{url_for('static',filename='os_assignment.pdf')}}" target="window2" class="list-group-item list-group-item-action bg-light current">Report1</a>
+                <a href="{{url_for('static',filename='os_assignment.pdf')}}" target="window2" class="list-group-item list-group-item-action bg-light">Report2</a>
+                <a href="{{url_for('static',filename='os_assignment.pdf')}}" target="window2" class="list-group-item list-group-item-action bg-light">Report3</a>
+                <a href="{{url_for('static',filename='os_assignment.pdf')}}" target="window2" class="list-group-item list-group-item-action bg-light">Report4</a>
+                <a href="{{url_for('static',filename='os_assignment.pdf')}}" target="window2" class="list-group-item list-group-item-action bg-light">Report5</a>
+                <a href="{{url_for('static',filename='os_assignment.pdf')}}" target="window2" class="list-group-item list-group-item-action bg-light">Report6</a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" style="margin-top: 0px;padding-top: 0px">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn btn-primary" id="menu-toggle">click here to see reports</button>
+            </nav>
+
+            <div style="margin: 1px">
+                <iframe src="{{url_for('Patient_home')}}" name="window2" style="width:100%;height: 91.2vh;border-style: solid;border-color: silver;margin-top: 0px">
+                        
+                            
+                    
+                             
+        </iframe>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+</body>
+
+</html>

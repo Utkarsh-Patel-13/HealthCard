@@ -39,7 +39,7 @@ def find_user_by_id(u_id):
         Work in progress...
         Find user in database by AadharNo.
     '''
-    user = db_user.find_one({'AadharNo': u_id})
+    user = db_user.find_one({'Email': u_id})
     print(user.__str__())
     return user
 

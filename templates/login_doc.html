@@ -1,112 +1,111 @@
 <!doctype html>
 <html lang="en">
 
-    <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>medical card</title>
-        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/static/css/animate.css">
-        <link rel="stylesheet" href="/static/css/style.css">
-        <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
-    </head>
-    
-    <body>
-        <!--::header part start::-->
-        <header class="main_menu home_menu">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-12">
-                        <nav class="navbar navbar-expand-lg navbar-light">
-                            <a class="navbar-brand" href="index.html"> <img src="/static/img/service.png" alt="logo" width="100px" height="100px"> </a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>medical card</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
+</head>
+
+<body>
+    <!--::header part start::-->
+    <header class="main_menu home_menu">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <nav class="navbar navbar-expand-lg navbar-light">
+                        <a class="navbar-brand" href="index.html"> <img src="/static/img/service.png" alt="logo" width="100px" height="100px"> </a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
-    
-                            <div class="collapse navbar-collapse main-menu-item justify-content-center"
-                                id="navbarSupportedContent">
-                                
-                            </div>
-                            <a class="btn_2 d-none d-lg-block" href="{{url_for('index')}}">back</a>
-                        </nav>
-                      
-                    </div>
+
+                        <div class="collapse navbar-collapse main-menu-item justify-content-center" id="navbarSupportedContent">
+
+                        </div>
+                        <a class="btn_2 d-none d-lg-block" href="{{url_for('index')}}">back</a>
+                    </nav>
+
                 </div>
             </div>
-        </header>
+        </div>
+    </header>
     <!-- header part over -->
 
     <!-- banner part start-->
     <section class="banner_part">
-        <div class="container" >
+        <div class="container">
             <div class="row">
-                <div class="col-12 align-items-center" >
-                   
-                           
-                            <div class="navbar navbar-expand-lg navbar-light">
-                                <div class="collapse navbar-collapse ">
-                                    
-                                 </div>
-                            </div>
-                           
-                            <form class="" action="{{url_for('doctor')}}" method="POST" style="border:1px;border-style: solid;border-color:silver;margin-top: 32%;"> 
-                             <center>
-                                 
-                                <h3>Savasthaya Sahayak</h3>
-                                <h2>Your Personal health Card</h2><br><br>
-                                <h3>Please,Login here</h3>
-                                <div class="container">
-                                  <label for="uname"><b>Username</b></label>
-                                  <input type="text" placeholder="Enter Username" name="uname" required>
-                                  <br>
-                                  <label for="psw"><b>Password</b></label>
-                                  <input type="password" placeholder="Enter Password" name="psw" required>
-                                  <br>  
-                                  <a href="{{url_for('doctor')}}"><button type="submit">Login</button></a>
-                                  <br>
-                                  <label>
+                <div class="col-12 align-items-center">
+
+
+                    <div class="navbar navbar-expand-lg navbar-light">
+                        <div class="collapse navbar-collapse ">
+
+                        </div>
+                    </div>
+
+                    <form class="" action="{{url_for('doctor')}}" method="POST" style="border:1px;border-style: solid;border-color:silver;margin-top: 32%;">
+                        <center>
+
+                            <h3>Savasthaya Sahayak</h3>
+                            <h2>Your Personal health Card</h2><br><br>
+                            <h3>Please,Login here</h3>
+                            <div class="container">
+                                <label for="uname"><b>Username</b></label>
+                                <input type="text" placeholder="Enter Username" name="uname" required>
+                                <br>
+                                <label for="psw"><b>Password</b></label>
+                                <input type="password" placeholder="Enter Password" name="psw" required>
+                                <br>
+                                <a href="{{url_for('doctor')}}"><button type="submit">Login</button></a>
+                                <br>
+                                <label>
                                     <input type="checkbox" checked="checked" name="remember"> Remember me
                                   </label>
-                                </div>
-                            
-                                <div class="container" style="background-color:#f1f1f1">
-                                 <span class="psw">Forgot <a href="#">password?</a></span>
-                                </div>
-                                </center>
-                              </form>
+                            </div>
 
-                              <center><div style="margin-top:3%;">
-                                <a href="{{url_for('newd')}}">click here?don't have a account</a>
-                            </div></center>
-                           
-                      
+                            <div class="container" style="background-color:#f1f1f1">
+                                <span class="psw">Forgot <a href="#">password?</a></span>
+                            </div>
+                        </center>
+                    </form>
+
+                    <center>
+                        <div style="margin-top:3%;">
+                            <a href="{{url_for('newd')}}">click here?don't have a account</a>
+                        </div>
+                    </center>
+
+
                 </div>
-               
+
             </div>
         </div>
     </section>
     <!-- banner part start-->
 
-   
+
     <!-- footer part start-->
     <footer class="footer-area">
-       
-            <div class="container">
-                <div class="row justify-content-between">
-                    <div class="col-xl-2 col-md-4 col-sm-6 single-footer-widget">
-                    <div >
+
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-xl-2 col-md-4 col-sm-6 single-footer-widget">
+                    <div>
                         <ul>
                             <li><a href="#" style="font-size:25px;">About us</a></li>
                         </ul>
                     </div>
-                             
+
                 </div>
             </div>
-       
-        
+
+
     </footer>
 
     <!-- footer part end-->
