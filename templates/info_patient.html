@@ -16,10 +16,10 @@
 <body>
 
 
-    <div class="container" style="border: 2px solid black; width: 80%; padding: 20px 20px 20px 20px;">
-        <div class="row">
+    <div class="container" style="border: 2px solid black; height: 100vh;">
+        <div class="row" style="font-size: large; line-height: 4vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  padding: 20px 20px 20px 20px;">
             <div class="col-lg-12">
-
+                <div><strong>Patient Information</strong></div><br>
                 <div>Name : {{ Name }}</div><br>
                 <div>Email : {{ Email }}</div><br>
                 <div>AadharNo : {{ Aadhar }}</div><br>
@@ -27,8 +27,14 @@
                 <div>Date Of Birth : {{ DOB }}</div><br>
                 <div>ContactNo : {{ Contact }}</div><br>
                 <div>Address : {{ Address }}</div><br>
-                <div>Emergency Contact : {{ Emergency }}</div><br>
 
+            </div>
+            <div class="col-lg-12" style="border-top: 3px solid black;">
+                <br><strong>Contact Information</strong><br>
+                <br>
+                <div style="line-height: 30px;">
+                    Name: {{ e_Name }} <br> Relation: {{ e_Rel }} <br> Contact: {{ e_Contact }} <br>
+                </div>
             </div>
         </div>
 

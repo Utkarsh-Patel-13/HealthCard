@@ -14,6 +14,7 @@ app.config['SECRET_KEY'] = b'\xb0\xf4\xe8\\U\x8d\xba\xb4B2h\x88\xf9\x08\xb1J'
 
 currentUser = None
 
+
 @app.route('/')
 @app.route('/index')
 @app.route('/home')
@@ -138,10 +139,13 @@ def Patient_home():
 def info_patient():
     global currentUser
     patient = find_user_by_id(currentUser)
+
     if patient is not None:
+        emergency_list = list(patient['EmergencyContact'].split(","))
         return render_template('info_patient.html', Name=patient['Name'], Email=patient['Email'],
                                Aadhar=patient['AadharNo'], Gender=patient['Gender'], DOB=patient['DOB'],
-                               Contact=patient['ContactNo'], Address=patient['Address'], Emergency=patient['EmergencyContact'])
+                               Contact=patient['ContactNo'], Address=patient['Address'],
+                               e_Name=emergency_list[0], e_Rel=emergency_list[1], e_Contact=emergency_list[2])
     else:
         return render_template('info_patient.html')
 
