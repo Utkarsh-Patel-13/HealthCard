@@ -145,6 +145,7 @@ def info_patient():
     else:
         return render_template('info_patient.html')
 
+
 @app.route('/edit_info_patient')
 def edit_info_patient():
     return render_template('edit_info_patient.html')
