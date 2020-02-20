@@ -109,11 +109,6 @@ def patient():
     return render_template('Patient.html')
 
 
-@app.route("/logout")
-def logout():
-    session.pop('username', None)
-    return redirect("/index")
-
 
 @app.route('/upload_report')
 def upload_report():
@@ -127,7 +122,8 @@ def Trending():
 
 @app.route('/report_patient')
 def report_patient():
-    return render_template('report_patient.html')
+    x = [1, 2, 3, 4, 5]
+    return render_template('report_patient.html', x=x)
 
 
 @app.route('/Patient_home')
@@ -178,6 +174,13 @@ def DOC_1st():
 @app.route('/currentnews')
 def currentnews():
     return render_template('currentnews.html')
+
+
+@app.route("/logout")
+def logout():
+    session.pop('username', None)
+    return redirect("/index")
+
 
 
 """
