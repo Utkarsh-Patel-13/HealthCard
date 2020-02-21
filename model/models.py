@@ -82,11 +82,5 @@ class Doctor:
         self.AadharNo = aadhar_no
         self.CertificateNo = certificate_no
 
-    def validity_check(self):
-        if check_contact_validity(self.ContactNo) == -1:
-            return "ContactNumber invalid..."
-        elif check_aadhar_validity(self.AadharNo) == -1:
-            return "AadharNo invalid..."
-        else:
-            return "ok"
+
 

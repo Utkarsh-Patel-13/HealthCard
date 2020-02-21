@@ -2,9 +2,7 @@ from query.UserQuery import create_user, find_user_name, update_user
 from query.DoctorQuery import create_doctor
 from databaseConnections import db_user
 from flask import Flask, request, render_template
-from validityfunctions import check_aadhar_validity, check_aadhar_in_DB
 from model.models import Address, Emergency
-from query.UserData import create_report
 
 from databaseConnections import db_user
 
