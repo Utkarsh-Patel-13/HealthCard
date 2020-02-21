@@ -43,6 +43,15 @@ def find_user_by_id(u_id):
     return user
 
 
+def get_user_aadhar(email):
+    '''
+        Work in progress...
+        Find user in database by AadharNo.
+    '''
+    user = db_user.find_one({'Email': email})
+    return user['AadharNo']
+
+
 def update_user(uid, u_pno):
     db_user.update_one({'AadharNo': uid}, {"$set": {'ContactNo': u_pno}})
 

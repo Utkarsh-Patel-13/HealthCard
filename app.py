@@ -1,9 +1,10 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request, session, flash
+from flask import Flask, render_template, redirect, url_for, request, session, flash, send_file, jsonify
 
 from forms import RegistrationFormUser, LoginFormUser
 from model.models import Emergency, Address, User
-from query.UserQuery import create_user, find_user_by_id
+from query.UserQuery import create_user, find_user_by_id, get_user_aadhar
+import json
 from databaseConnections import db_login, db_user
 
 app = Flask(__name__)
@@ -122,8 +123,29 @@ def Trending():
 
 @app.route('/report_patient')
 def report_patient():
-    x = [1, 2, 3, 4, 5]
-    return render_template('report_patient.html', x=x)
+    global currentUser
+    aadhar = get_user_aadhar(currentUser)
+    location = os.path.join('/home/utkarsh/HealthServer/UserData/', aadhar)
+    files = []
+
+    # r=>root, d=>directories, f=>files
+    for r, d, f in os.walk(location):
+        for item in f:
+            if '.pdf' in item:
+                js = {'fname': item.__str__()}
+                files.append(js)
+    return render_template('report_patient.html', files=files)
+
+
+@app.route('/return_files/<name>')
+def return_files_tut(name):
+    global currentUser
+    try:
+        aadhar = get_user_aadhar(currentUser)
+        path = os.path.join('/home/utkarsh/HealthServer/UserData/', aadhar, name)
+        return send_file(path, attachment_filename=name)
+    except Exception as e:
+        return str(e)
 
 
 @app.route('/Patient_home')

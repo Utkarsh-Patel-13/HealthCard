@@ -58,23 +58,23 @@
 
                             <h3>Savasthaya Sahayak</h3>
                             <h2>Your Personal health Card</h2><br><br>
-                            <h3>Please,Login here</h3>
+                            <h3>Please, Login Here</h3>
                             <div class="container">
                                 {{form.hidden_tag()}}
 
-                                <p>
+                                <p style="font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;">
 
-                                    {{form.Email.label}}<br> {{form.Email}} {% for error in form.Email.errors %}
+                                    <b>{{form.Email.label}}</b><br> {{form.Email}} {% for error in form.Email.errors %}
                                     <span class="error msg">{{error}}</span> {% endfor %}
 
                                 </p>
 
                                 <p>
 
-                                    {{form.Password.label}}<br> {{form.Password}} {% for error in form.Password.errors %}
+                                    <b>{{form.Password.label}}</b><br> {{form.Password}} {% for error in form.Password.errors %}
                                     <span class="error msg">{{error}}</span> {% endfor %}
                                 </p>
-
+                                <br>
                                 <p>
 
                                     {{form.submit()}}
@@ -83,14 +83,14 @@
                             </div>
 
                             <div class="container" style="background-color:#f1f1f1">
-                                <span class="psw">Forgot <a href="#">password?</a></span>
+                                <span class="psw">Forgot <a href="#">password ?</a></span>
                             </div>
                         </center>
                     </form>
 
                     <center>
                         <div style="margin-top:3%;">
-                            <a href="{{url_for('newpatient')}}">click here?don't have a account</a>
+                            <a href="{{url_for('newpatient')}}">Don't have an account? Click Here</a>
                         </div>
                     </center>
 
