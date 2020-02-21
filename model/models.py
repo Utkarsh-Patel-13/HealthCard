@@ -83,4 +83,9 @@ class Doctor:
         self.CertificateNo = certificate_no
 
 
+class News:
+    title = ""
+    guid = ""
+    description = ""
+
 

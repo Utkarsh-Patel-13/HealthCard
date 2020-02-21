@@ -1,11 +1,10 @@
 import os
-from flask import Flask, render_template, redirect, url_for, request, session, flash, send_file, jsonify
+from flask import Flask, render_template, redirect, session, flash, send_file
 
 from forms import RegistrationFormUser, LoginFormUser
 from model.models import Emergency, Address, User
+from query.NewsQuery import find_latest_news
 from query.UserQuery import create_user, find_user_by_id, get_user_aadhar
-import json
-from databaseConnections import db_login, db_user
 
 app = Flask(__name__)
 
@@ -111,11 +110,6 @@ def upload_report():
     return render_template('upload_report.html')
 
 
-@app.route('/Trending')
-def Trending():
-    return render_template('Trending.html')
-
-
 @app.route('/report_patient')
 def report_patient():
     currentUser = session.get('username')
@@ -123,7 +117,6 @@ def report_patient():
     location = os.path.join('/home/utkarsh/HealthServer/UserData/', aadhar)
     files = []
 
-    # r=>root, d=>directories, f=>files
     for r, d, f in os.walk(location):
         for item in f:
             if '.pdf' in item:
@@ -145,12 +138,13 @@ def return_files_tut(name):
 
 @app.route('/Patient_home')
 def Patient_home():
-    return render_template('Patient_home.html')
+    return render_template('info_patient.html')
+    #return render_template('Patient_home.html')
 
 
 @app.route('/info_patient')
 def info_patient():
-    global currentUser
+    currentUser = session.get('username')
     patient = find_user_by_id(currentUser)
 
     if patient is not None:
@@ -185,7 +179,14 @@ def doctor_home():
 
 @app.route('/currentnews')
 def currentnews():
-    return render_template('currentnews.html')
+    news = find_latest_news()
+    return render_template('currentnews.html', news=news)
+
+
+@app.route('/Trending')
+def Trending():
+    news = find_latest_news()
+    return render_template('user_cur_news.html', news=news)
 
 
 @app.route("/logout")
