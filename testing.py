@@ -1,11 +1,4 @@
-from urllib.request import urlopen
-
-from query.UserQuery import create_user, update_user
-from query.DoctorQuery import create_doctor
-from databaseConnections import db_user
-from flask import Flask, request, render_template
-from model.models import Address, Emergency
-import requests
+from bson import ObjectId
 from databaseConnections import db_user
 
 """
@@ -28,3 +21,11 @@ print(x)
 for i in x:
     print(i['Email'])
 """
+
+
+def find_user(u_id):
+    user = db_user.find_one({'_id': ObjectId(u_id)})
+    return user
+
+user = find_user("5e503196440c8a31c881f25a")
+print(user)

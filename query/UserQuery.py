@@ -1,3 +1,5 @@
+from bson import ObjectId
+
 from databaseConnections import db_user
 from model.models import User, Address, Emergency
 from pymongo import errors
@@ -38,6 +40,11 @@ def update_user(Email, Name, ContactNo, Gender, DOB,
 
 def find_user_by_id(u_id):
     user = db_user.find_one({'Email': u_id})
+    return user
+
+
+def find_user(u_id):
+    user = db_user.find_one({'_id': u_id})
     return user
 
 

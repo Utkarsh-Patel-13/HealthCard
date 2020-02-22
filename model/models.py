@@ -2,7 +2,7 @@ from os.path import expanduser
 import os
 from mongoengine import Document, StringField
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask_login import UserMixin
 
 class Address:
 
@@ -28,7 +28,7 @@ class Emergency:
         return '{}, {}, {}'.format(self.Name, self.ContactNo, self.Relation)
 
 
-class User(Document):
+class User(UserMixin, Document):
     # User Table
     Email = StringField(unique=True)
     Name = StringField()
@@ -39,6 +39,7 @@ class User(Document):
     DOB = StringField()
     Address = StringField()
     EmergencyContact = StringField()
+
 
     def create_user_folder(self):
         # create data folder for user
@@ -72,7 +73,7 @@ class User(Document):
         return '<User {}, {}, {}, {}>'.format(self.Name, self.DOB, self.Gender, self.AadharNo)
 
 
-class Doctor(Document):
+class Doctor(UserMixin, Document):
     # Certificate Number verification left.
     Email = StringField(unique=True)
     Name = StringField()
@@ -97,3 +98,17 @@ class News:
 
 class SearchPatient():
     AadharNo = StringField()
+
+
+class USER(UserMixin):
+    def __init__(self, user_json):
+        self.user_json = user_json
+
+    # Overriding get_id is required if you don't have the id property
+    # Check the source code for UserMixin for details
+    def get_id(self):
+        print(self.user_json)
+        object_id = self.user_json.get('_id')
+        return str(object_id)
+
+

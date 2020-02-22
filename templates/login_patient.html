@@ -29,11 +29,6 @@
                         </div>
                         <a class="btn_2 d-none d-lg-block" href="{{url_for('index')}}">back</a>
                     </nav>
-                    {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %}
-                    <div class="alert alert-danger">
-                        <p>{{message}}</p>
-                    </div>
-                    {% endfor %} {% endif %} {% endwith %}
                 </div>
             </div>
         </div>

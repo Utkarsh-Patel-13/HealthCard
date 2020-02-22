@@ -1,13 +1,18 @@
 import os
+
+from bson import ObjectId
 from flask import Flask, render_template, redirect, session, flash, send_file, request, url_for
 from werkzeug.utils import secure_filename
 
 from forms import RegistrationFormUser, LoginFormUser, EditUserForm, RegistrationFormDoctor, LoginFormDoctor, \
     SearchPatient
-from model.models import Emergency, Address, User, Doctor
+from model.models import Emergency, Address, User, Doctor, USER
 from query.DoctorQuery import create_doctor, find_doctor_by_id
 from query.NewsQuery import find_latest_news
-from query.UserQuery import create_user, find_user_by_id, get_user_aadhar, update_user, find_user_by_Aadhar
+from query.UserQuery import create_user, find_user_by_id, get_user_aadhar, update_user, find_user_by_Aadhar, find_user
+from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
+from model.models import User
+
 
 app = Flask(__name__)
 
@@ -19,16 +24,22 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 ALLOWED_EXTENSIONS = {'pdf'}
 
-currentUser = None
-currentDoctor = None
+
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'index'
+
 AadharNo = None
-patient = None
 
 @app.route('/')
 @app.route('/index')
-@app.route('/home')
 def index():
     return render_template('index.html')
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return USER(find_user(user_id))
 
 
 @app.route('/newpatient', methods=["GET", "POST"])
@@ -75,65 +86,8 @@ def newpatient():
     return render_template('newpatient.html', form=form)
 
 
-@app.route('/newdoctor', methods=["GET", "POST"])
-def newdoctor():
-    if session.get('doctorname'):
-        return redirect('/index')
-
-    form = RegistrationFormDoctor()
-
-    if form.validate_on_submit():
-        Email = form.Email.data
-        Password = form.Password.data
-        AadharNo = form.AadharNo.data
-        Name = form.Name.data
-        ContactNo = form.ContactNo.data
-        Gender = form.Gender.data
-        CertificateNo = form.CertificateNo.data
-        doctor = create_doctor(Email=Email, Name=Name, AadharNo=AadharNo,
-                               ContactNo=ContactNo, Gender=Gender,
-                               CertificateNo=CertificateNo)
-
-        doctor.set_password(Password)
-
-        try:
-            doctor.save()
-            flash("New ID Created Successfully", "success")
-            return redirect("/login_doc")
-        except Exception as e:
-            flash("Failed to create user, try again")
-            print(e)
-            return redirect('/newdoctor')
-
-    return render_template('newdoctor.html', form=form)
-
-
-@app.route('/login_doc', methods=["GET", "POST"])
-def logind():
-    if session.get('doctorname'):
-        return redirect("/Doctor")
-
-    form = LoginFormDoctor()
-    if form.validate_on_submit():
-        Email = form.Email.data
-        global currentDoctor
-        currentDoctor = Email
-        Password = form.Password.data
-
-        doctor = Doctor.objects(Email=Email).first()
-        if doctor and doctor.get_password(Password):
-            # session['user_id'] = user.user_id
-            session['doctorname'] = doctor.Email
-            return redirect("/Doctor")
-        else:
-            flash("Incorrect username or password")
-    return render_template('login_doc.html', form=form)
-
-
 @app.route('/login_patient', methods=["GET", "POST"])
 def loginp():
-    if session.get('username'):
-        return redirect("/Patient")
 
     form = LoginFormUser()
     if form.validate_on_submit():
@@ -141,43 +95,27 @@ def loginp():
         Password = form.Password.data
 
         user = User.objects(Email=Email).first()
+        print(user)
         if user and user.get_password(Password):
-            # session['user_id'] = user.user_id
+            login_user(user, remember=True)
             session['username'] = user.Email
             return redirect("/Patient")
         else:
-            flash("Incorrect username or password")
+            print("Incorrect username or password")
     return render_template('login_patient.html', form=form)
 
 
-@app.route('/Doctor', methods=["GET", "POST"])
-def doctor():
-    form = SearchPatient()
-    if form.validate_on_submit():
-        global AadharNo
-        AadharNo = form.AadharNo.data
-        global patient
-        patient = find_user_by_Aadhar(AadharNo)
-        return redirect('/doctor_w_patient')
-    return render_template('DOCTOR.html', form=form)
-
-
-@app.route('/info_patient_by_doctor')
-def info_patient_by_doctor():
-    global patient
-    if patient is not None:
-        emergency_list = list(patient['EmergencyContact'].split(","))
-        return render_template('info_patient.html', Name=patient['Name'], Email=patient['Email'],
-                               Aadhar=patient['AadharNo'], Gender=patient['Gender'], DOB=patient['DOB'],
-                               Contact=patient['ContactNo'], Address=patient['Address'],
-                               e_Name=emergency_list[0], e_Rel=emergency_list[1], e_Contact=emergency_list[2])
-    else:
-        return render_template('info_patient.html')
-
-
 @app.route('/Patient', methods=["GET", "POST"])
+@login_required
 def patient():
     return render_template('Patient.html')
+
+
+@app.route('/Patient_home')
+@login_required
+def Patient_home():
+    #return render_template('info_patient.html')
+    return render_template('Patient_home.html')
 
 
 def allowed_file(filename):
@@ -185,26 +123,8 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-@app.route('/upload_report', methods=['GET', 'POST'])
-def upload_report():
-    global AadharNo
-    if request.method == 'POST':
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            app.config['UPLOAD_FOLDER'] = os.path.join(UPLOAD_FOLDER, AadharNo)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return render_template('upload_report.html')
-    return render_template('upload_report.html')
-
-
 @app.route('/report_patient')
+@login_required
 def report_patient():
     currentUser = session.get('username')
     global AadharNo
@@ -223,11 +143,11 @@ def report_patient():
                 js = {'fname': item.__str__()}
                 files.append(js)
 
-    print(aadhar, files, AadharNo, currentUser)
     return render_template('report_patient.html', files=files)
 
 
 @app.route('/return_files/<name>')
+@login_required
 def return_files_tut(name):
     try:
         currentUser = session.get('username')
@@ -243,13 +163,8 @@ def return_files_tut(name):
         return str(e)
 
 
-@app.route('/Patient_home')
-def Patient_home():
-    return render_template('info_patient.html')
-    #return render_template('Patient_home.html')
-
-
 @app.route('/info_patient')
+@login_required
 def info_patient():
     currentUser = session.get('username')
     patient = find_user_by_id(currentUser)
@@ -265,6 +180,7 @@ def info_patient():
 
 
 @app.route('/edit_info_patient', methods=['GET', 'POST'])
+@login_required
 def edit_info_patient():
     currentUser = session.get('username')
     user = find_user_by_id(currentUser)
@@ -317,16 +233,96 @@ def edit_info_patient():
     return render_template('edit_info_patient.html', form=form, msg="")
 
 
-@app.route('/doctor_w_patient')
-def doctor_w_patient():
-    return render_template('doctor_w_patient.html')
+@app.route('/currentnews')
+@login_required
+def currentnews():
+    news = find_latest_news()
+    return render_template('currentnews.html', news=news)
+
+
+@app.route('/Trending')
+@login_required
+def Trending():
+    news = find_latest_news()
+    return render_template('user_cur_news.html', news=news)
+
+
+@app.route('/newdoctor', methods=["GET", "POST"])
+def newdoctor():
+    if session.get('doctorname'):
+        return redirect('/index')
+
+    form = RegistrationFormDoctor()
+
+    if form.validate_on_submit():
+        Email = form.Email.data
+        Password = form.Password.data
+        AadharNo = form.AadharNo.data
+        Name = form.Name.data
+        ContactNo = form.ContactNo.data
+        Gender = form.Gender.data
+        CertificateNo = form.CertificateNo.data
+        doctor = create_doctor(Email=Email, Name=Name, AadharNo=AadharNo,
+                               ContactNo=ContactNo, Gender=Gender,
+                               CertificateNo=CertificateNo)
+
+        doctor.set_password(Password)
+
+        try:
+            doctor.save()
+            flash("New ID Created Successfully", "success")
+            return redirect("/login_doc")
+        except Exception as e:
+            flash("Failed to create user, try again")
+            print(e)
+            return redirect('/newdoctor')
+
+    return render_template('newdoctor.html', form=form)
+
+
+@app.route('/login_doc', methods=["GET", "POST"])
+def logind():
+    if session.get('doctorname'):
+        return redirect("/Doctor")
+
+    form = LoginFormDoctor()
+    if form.validate_on_submit():
+        Email = form.Email.data
+        Password = form.Password.data
+
+        doctor = Doctor.objects(Email=Email).first()
+        if doctor and doctor.get_password(Password):
+            login_user(doctor, remember=True)
+            session['doctorname'] = doctor.Email
+
+            return redirect("/Doctor")
+        else:
+            flash("Incorrect username or password")
+    return render_template('login_doc.html', form=form)
+
+
+@app.route('/Doctor', methods=["GET", "POST"])
+@login_required
+def doctor():
+    form = SearchPatient()
+    if form.validate_on_submit():
+        global AadharNo
+        AadharNo = form.AadharNo.data
+        return redirect('/doctor_w_patient')
+    return render_template('DOCTOR.html', form=form)
+
+
+@app.route('/doctor_home')
+@login_required
+def doctor_home():
+    return render_template('doctor_home.html')
 
 
 @app.route('/doctor_info')
+@login_required
 def doctor_info():
-    global currentDoctor
+    currentDoctor = session.get('doctorname')
     doctor = find_doctor_by_id(currentDoctor)
-
     if doctor is not None:
         return render_template('doctor_info.html', Name=doctor['Name'], Email=doctor['Email'],
                                Aadhar=doctor['AadharNo'], Gender=doctor['Gender'],CertificateNo=doctor['CertificateNo'])
@@ -334,29 +330,56 @@ def doctor_info():
         return render_template('doctor_info.html')
 
 
-@app.route('/doctor_home')
-def doctor_home():
-    return render_template('doctor_home.html')
+@app.route('/doctor_w_patient')
+@login_required
+def doctor_w_patient():
+    return render_template('doctor_w_patient.html')
 
 
-@app.route('/currentnews')
-def currentnews():
-    news = find_latest_news()
-    return render_template('currentnews.html', news=news)
+@app.route('/info_patient_by_doctor')
+@login_required
+def info_patient_by_doctor():
+    patient = find_user_by_Aadhar(AadharNo)
+    if patient is not None:
+        emergency_list = list(patient['EmergencyContact'].split(","))
+        return render_template('info_patient.html', Name=patient['Name'], Email=patient['Email'],
+                               Aadhar=patient['AadharNo'], Gender=patient['Gender'], DOB=patient['DOB'],
+                               Contact=patient['ContactNo'], Address=patient['Address'],
+                               e_Name=emergency_list[0], e_Rel=emergency_list[1], e_Contact=emergency_list[2])
+    else:
+        return render_template('info_patient.html')
 
 
-@app.route('/Trending')
-def Trending():
-    news = find_latest_news()
-    return render_template('user_cur_news.html', news=news)
+@app.route('/upload_report', methods=['GET', 'POST'])
+@login_required
+def upload_report():
+    global AadharNo
+    if request.method == 'POST':
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            app.config['UPLOAD_FOLDER'] = os.path.join(UPLOAD_FOLDER, AadharNo)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return render_template('upload_report.html')
+    return render_template('upload_report.html')
 
 
 @app.route("/logout")
+@login_required
 def logout():
-    session.pop('username', None)
-    session.pop('doctorname',None)
+    if session.get('username') is not None:
+        session.pop('username')
+    if session.get('doctorname') is not None:
+        session.pop('doctorname')
+    logout_user()
     return redirect("/index")
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
