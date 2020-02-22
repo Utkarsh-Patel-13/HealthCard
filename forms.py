@@ -21,17 +21,34 @@ class RegistrationFormUser(FlaskForm):
                              validators=[DataRequired(), Length(min=10, max=13)])
     AadharNo = StringField("Aadhar", validators=[DataRequired(), Length(min=12, max=12)])
     DOB = StringField("DOB", validators=[DataRequired(), Length(min=2, max=55)])
-    Street1 = StringField("Street Address Line 1")
-    Street2 = StringField("Street Address Line 2")
-    City = StringField("City")
-    State = StringField("State")
+    Street1 = StringField("Street Address Line 1", validators=[DataRequired()])
+    Street2 = StringField("Street Address Line 2", validators=[DataRequired()])
+    City = StringField("City", validators=[DataRequired()])
+    State = StringField("State", validators=[DataRequired()])
     Zip = StringField("Zip Code", validators=[Length(min=6, max=6)])
-    EmergencyContactName = StringField("Emergency contact Full Name")
-    EmergencyContactRelation = StringField("Emergency contact Relation")
-    EmergencyContactNumber = StringField("Emergency contact PhoneNo")
+    EmergencyContactName = StringField("Emergency contact Full Name", validators=[DataRequired()])
+    EmergencyContactRelation = StringField("Emergency contact Relation", validators=[DataRequired()])
+    EmergencyContactNumber = StringField("Emergency contact PhoneNo", validators=[DataRequired()])
     submit = SubmitField(" Register ")
 
     def validate_Email(self, Email):
         user = User.objects(Email=Email.data).first()
         if user:
             raise ValidationError("Email Exists")
+
+
+class EditUserForm(FlaskForm):
+    Name = StringField("Name", validators=[DataRequired(), Length(min=2, max=55)])
+    Gender = StringField("Gender", validators=[DataRequired(), Length(min=2, max=55)])
+    ContactNo = StringField("Contact",
+                             validators=[DataRequired(), Length(min=10, max=13)])
+    DOB = StringField("DOB", validators=[DataRequired(), Length(min=2, max=55)])
+    Street1 = StringField("Street Address Line 1", validators=[DataRequired()])
+    Street2 = StringField("Street Address Line 2", validators=[DataRequired()])
+    City = StringField("City", validators=[DataRequired()])
+    State = StringField("State", validators=[DataRequired()])
+    Zip = StringField("Zip Code", validators=[Length(min=6, max=6)])
+    EmergencyContactName = StringField("Emergency contact Full Name", validators=[DataRequired()])
+    EmergencyContactRelation = StringField("Emergency contact Relation", validators=[DataRequired()])
+    EmergencyContactNumber = StringField("Emergency contact PhoneNo", validators=[DataRequired()])
+    submit = SubmitField(" Update ")

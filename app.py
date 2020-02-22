@@ -1,10 +1,11 @@
 import os
-from flask import Flask, render_template, redirect, session, flash, send_file
+from flask import Flask, render_template, redirect, session, flash, send_file, request
 
-from forms import RegistrationFormUser, LoginFormUser
+from forms import RegistrationFormUser, LoginFormUser, EditUserForm
 from model.models import Emergency, Address, User
 from query.NewsQuery import find_latest_news
-from query.UserQuery import create_user, find_user_by_id, get_user_aadhar
+from query.UserQuery import create_user, find_user_by_id, get_user_aadhar, update_user
+import json
 
 app = Flask(__name__)
 
@@ -157,9 +158,57 @@ def info_patient():
         return render_template('info_patient.html')
 
 
-@app.route('/edit_info_patient')
+@app.route('/edit_info_patient', methods=['GET', 'POST'])
 def edit_info_patient():
-    return render_template('edit_info_patient.html')
+    currentUser = session.get('username')
+    user = find_user_by_id(currentUser)
+    address_list = list(user['Address'].split(','))
+    address = []
+    for i in address_list:
+        address.append(i.strip())
+    emergency_list = list(user['EmergencyContact'].split(','))
+    emergency = []
+    for i in emergency_list:
+        emergency.append(i.strip())
+    form = EditUserForm()
+
+    form.Name.data = user['Name']
+    form.Gender.data = user['Gender']
+    form.ContactNo.data = user['ContactNo']
+    form.DOB.data = user['DOB']
+    form.Street1.data = address[0]
+    form.Street2.data = address[1]
+    form.City.data = address[2]
+    form.State.data = address[3]
+    form.Zip.data = address[4]
+    form.EmergencyContactName.data = emergency[0]
+    form.EmergencyContactRelation.data = emergency[1]
+    form.EmergencyContactNumber.data = emergency[2]
+
+    if 'submit' in request.form:
+        Name = request.form['Name']
+        ContactNo = form.ContactNo.data = request.form['ContactNo']
+        Gender = form.Gender.data = request.form['Gender']
+        DOB = form.DOB.data = request.form['DOB']
+        Street1 = form.Street1.data = request.form['Street1']
+        Street2 = form.Street2.data = request.form['Street2']
+        City = form.City.data = request.form['City']
+        State = form.State.data = request.form['State']
+        Zip = form.Zip.data = request.form['Zip']
+        EmergencyContactName = form.EmergencyContactName.data = request.form['EmergencyContactName']
+        EmergencyContactRelation = form.EmergencyContactRelation.data = request.form['EmergencyContactRelation']
+        EmergencyContactNumber = form.EmergencyContactNumber.data = request.form['EmergencyContactNumber']
+
+        if form.validate():
+            user = update_user(Email=currentUser, Name=Name, ContactNo=ContactNo, Gender=Gender, DOB=DOB,
+                               Street1=Street1, Street2=Street2, City=City, State=State, Zip=Zip,
+                               EmergencyContactName=EmergencyContactName,
+                               EmergencyContactRelation=EmergencyContactRelation,
+                               EmergencyContactNumber=EmergencyContactNumber)
+
+            return render_template('edit_info_patient.html', form=form, msg="Profile Updated Successfully")
+
+    return render_template('edit_info_patient.html', form=form, msg="")
 
 
 @app.route('/doctor_w_patient')
