@@ -72,15 +72,21 @@ class User(Document):
         return '<User {}, {}, {}, {}>'.format(self.Name, self.DOB, self.Gender, self.AadharNo)
 
 
-class Doctor:
+class Doctor(Document):
     # Certificate Number verification left.
+    Email = StringField(unique=True)
+    Name = StringField()
+    Password = StringField()
+    Gender = StringField()
+    ContactNo = StringField()
+    AadharNo = StringField()
+    CertificateNo = StringField()
 
-    def __init__(self, name, gender, contact_no, aadhar_no, certificate_no):
-        self.Name = name
-        self.Gender = gender
-        self.ContactNo = contact_no
-        self.AadharNo = aadhar_no
-        self.CertificateNo = certificate_no
+    def set_password(self, password):
+        self.Password = generate_password_hash(password)
+
+    def get_password(self, password):
+        return check_password_hash(self.Password, password)
 
 
 class News:
@@ -89,3 +95,5 @@ class News:
     description = ""
 
 
+class SearchPatient():
+    AadharNo = StringField()

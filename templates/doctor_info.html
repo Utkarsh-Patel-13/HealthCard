@@ -1,3 +1,4 @@
+<!-- D:\GIH\frontend\img\QR_code_for_mobile_English_Wikipedia.svg.png -->
 <!doctype html>
 <html lang="en">
 
@@ -13,82 +14,23 @@
 </head>
 
 <body>
-    <!--::header part start::-->
-
-    <!-- Header part end-->
-
-    <!-- banner part start-->
-    <div>
-
-        <div style="border: 3px solid black; padding: 15px;">
-
-            My Information
-
-            <br><br><br>
-            <label>AadharNo.: </label>
-            <p>123456789987</p>
-            <!-- <input type="text" name="aadhar" id="aadhar" readonly placeholder="AadharNo." value={{aadhar}}> -->
-
-            <br><br><br>
-            <label>CertificateNo.: </label>
-            <p>5444643131</p>
-            <!-- <input type="text" name="certificate" id="certi" readonly placeholder="AadharNo." value={{certificate}}> -->
-
-            <br><br><br>
-
-            <label>Name: </label>
-            <p>Utkarsh Patel</p> <br>
-            <!-- <input type="text" name="firstname" id="fname" placeholder="First Name" maxlength="15" required>
-                                <input type="text" name="midname" id="mname" placeholder="Middle Name" maxlength="15" required>
-                                <input type="text" name="lastname" id="lname" placeholder="Last Name" maxlength="15" required>
-                 -->
-            <br><br><br>
-
-            <label>Email: </label>
-            <p>18dcs082@charusat.edu.in</p>
-            <!-- <input type="email" name="email" id="email" size="40"> -->
-
-            <br><br><br>
-
-            <label>Gender: </label>
-            <p>Male</p>
-            <!-- <select name="gender" required>
-                                    <option name="male" id="male" value="M">Male</option>
-                                    <option name="female" id="female" value="F">Female</option>
-                                    <option name="other" id="other" value="O">Other</option>
-                                </select> -->
-
-            <br><br><br>
-
-            <label>Date Of Birth:</label>
-            <p>20-dec-1999</p>
-            <!-- <input type="date" name="DOB" id="DOB"> -->
-
-            <br><br><br>
-
-            <label>Contact Number: </label>
-            <p>9446445441</p>
-            <!-- <input type="text" name="contact" id="contact" required maxlength="10"> -->
-
-            <br><br><br>
-
-            <label>Hoospital Address: </label>
-            <p>lotus hospital valsad</p><br>
 
 
+    <div class="container" style="border: 2px solid silver; height: 100vh;">
+        <div class="row" style="font-size: large; line-height: 4vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  padding: 20px 20px 20px 20px;">
+            <div class="col-lg-12">
+                <div><strong>Doctor Information</strong></div><br>
+                <div>Name : {{ Name }}</div><br>
+                <div>Email : {{ Email }}</div><br>
+                <div>AadharNo : {{ Aadhar }}</div><br>
+                <div>Gender : {{ Gender }}</div><br>
+                <div>Certificate Number: {{CertificateNo}}</div>
+            </div>
+            
         </div>
 
-
     </div>
-    <!-- banner part start-->
 
-
-    <!-- footer part start-->
-
-
-    <!-- footer part end-->
-
-    <!-- jquery plugins here-->
 
     <script src="/static/js/jquery-1.12.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>

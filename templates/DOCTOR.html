@@ -3,9 +3,19 @@
 
 <head>
     <!-- Required meta tags -->
+    <title>Doctor</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/static/css/animate.css"> -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
+  <!-- Custom styles for this template -->
+  <link href="/static/css/simple-sidebar.css" rel="stylesheet">
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>medical card</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/animate.css">
     <link rel="stylesheet" href="/static/css/style.css">
@@ -13,95 +23,86 @@
 </head>
 
 <body>
-    <!--::header part start::-->
-    <header class="main_menu home_menu">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-12">
-                    <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="d-flex" id="wrapper">
 
-
-                        <div class="collapse navbar-collapse main-menu-item justify-content-center" id="navbarSupportedContent">
-                            <ul class="navbar-nav align-items-center">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="#" style="font-size:30px;text-decoration: none;color:#3A45E0 ;"> Savasthaya Sahayak Your Personal Health Card 
-                                        <br><br>
-                                        <center>
-                                            <form style="" target="_self" action="doctor_w_patient.html">
-                                                
-                                                <br><input type="text"  name="PatientId" placeholder=" enter Patient Id" style="border-radius: 50px; height: 25px;width: 500px;font-size: 15px;border-color:skyblue;"/>
-                                            
-                                                <input type="submit" value="GO" name="GO" style="background-color: limegreen;border-radius: 20px;width: 50px;height: 25px;font-size: 15px;"/>
-                    
-                                            </form>
-                                        </center>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </div>
-                        <a class="navbar-brand" href="index.html"> <img src="/static/img/service.png" alt="logo" width="100px" height="100px"> </a>
-
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </header>
-    <!-- Header part end-->
-
-    <!-- banner part start-->
-    <aside class="left-sidebar">
-        <div class="logo">
-            <center>
-                <h1 style="margin-top:20px;color: linen;">
-                    {% for doctors in doctors %}
-                    <div>user id: {{doctors.user_id}}</div>
-                    {% else %}
-                    <h1>no users</h1>
-                    {% endfor %}
-                    <!-- doc name-->
-                </h1>
-                <img src="/static/img/doctor (1).png" style="height: 250px;width: 250px; margin-bottom: 25px;margin-top:20px;">
-            </center>
-        </div>
-        <nav class="left-nav">
-            <ul id="nav">
-                <li class="current"><a href="DOCTOR.html" target="self">home</a></li>
-                <li><a href="doctor_info.html" target="window">My Profile</a></li>
-                <!-- <li><a href="report_patient.html" target="window">Patient Reports</a></li> -->
-                <!-- <li><a href="upload_reports.html" target="window">upload reports</a></li> -->
-                <!-- <li><a href="trending.html" target="window">Trending diseases in my Area</a></li> -->
-                <li><a href="edit_info_patient.html" target="window">Edit Profile</a></li>
-                <li><a href="trending.html" target="window">Trending diseases in my Area</a></li>
-                <li><a href="index.html">Log Out</a></li>
-
-            </ul>
-        </nav>
-    </aside>
-
-
-    <div name="window" style="margin-top:126px;margin-left:309px;width:1215px;height:623px;">
-
-
-
-
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">MENU</div>
+      <div class="list-group list-group-flush">
+        <a href="{{url_for('doctor_home')}}" target="window" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="{{url_for('doctor_info')}}" target="window" class="list-group-item list-group-item-action bg-light">Profile</a>
+       <!--  <a href="report_patient.html" target="window" class="list-group-item list-group-item-action bg-light">All Reports</a> -->
+        <a href="{{url_for('currentnews')}}" target="window" class="list-group-item list-group-item-action bg-light">NEWS</a>
+        <a href="{{url_for('logout')}}" class="list-group-item list-group-item-action bg-light">Log Out</a>
+      </div>
     </div>
+    <!-- /#sidebar-wrapper -->
 
-    <!-- banner part start-->
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
 
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">CLICK HERE</button>
 
-    <!-- banner part start-->
+        
 
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+       
+            <form action="#" method="POST">
 
-    <!-- footer part start-->
+              <div class="form-group" style="border: 3px solid black; padding: 15px; font-size: 20px; font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace">
 
-    <!-- footer part end-->
+                  <p style="font-size: 30px;"><b>Doctor Information {{form.hidden_tag()}}</b></p>
+                  <div>
 
-    <!-- jquery plugins here-->
+                      {{form.AadharNo.label}}<br> {{form.AadharNo}} {% for error in form.AadharNo.errors %}
+                      <br><span class="error msg">{{error}}</span> {% endfor %}
 
-    <script src="/static/js/jquery-1.12.1.min.js"></script>
+                  </div>
+                  <div>
+
+                    {{form.submit()}} 
+
+                  </div> 
+              </div>    
+            </form>
+                               
+                            
+          </ul>
+        </div>
+        <a class="navbar-brand" href="index.html"> <img src="/static/img/service.png" alt="logo" width="50px" height="50px"> </a>
+      </nav>
+
+      
+        <!-- <h1 class="mt-4">Simple Sidebar</h1> -->
+        <div style="margin: 1px">
+        <iframe src="{{url_for('doctor_home')}}" name="window" style="width:100%;height: 88.3vh;border-style: solid;border-color: silver;margin-top: 0px;margin-left: 0px;">
+                        
+                            
+                    
+                             
+        </iframe> 
+     
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+  <script src="/static/js/jquery-1.12.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
-    <script src="/static/js/custom.js"></script>
 </body>
 
 </html>

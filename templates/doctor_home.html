@@ -1,58 +1,79 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>medical card</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <!-- <link rel="stylesheet" href="/static/css/animate.css"> -->
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
-</head>
-
-<body>
-    <!--::header part start::-->
-
-    <!-- Header part end-->
-
-
-
-    <!-- banner part start-->
-    <!-- <iframe src="Patient_home.html" name="window" style="margin-top:101px;margin-left:309px;width:1215px;height:599px;">
-                        
-                            
-                    
-                             
-                    </iframe>                  -->
-    <!-- <div style="margin-top:101px;width: 100%;height: 500px;">
-                            
-                        <center>
-                            <form action="doctor_w_patient.html" target="" style="margin-top: 250px;">
-                                
-                                <br><input type="text"  name="PatientId" placeholder="    enter Patient Id" style="border-radius: 50px; height: 40px;width: 500px;"/>
-                                <br>
-                                <br>
-                                <center><input type="submit" value="GO" name="GO" style="background-color: limegreen;border-radius: 20px;width: 250px;height: 50px;"/></center>
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script>L_PREFER_CANVAS=false; L_NO_TOUCH=false; L_DISABLE_3D=false;</script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.4.0/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
     
-                            </form>
-                        </center>
-                                 
-                        </div>          -->
-
-    <!-- banner part start-->
-
-
-    <!-- footer part start-->
-
-    <!-- footer part end-->
-
-    <!-- jquery plugins here-->
-
-    <script src="/static/js/jquery-1.12.1.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
-    <!-- <script src="/static/js/custom.js"></script> -->
+    <meta name="viewport" content="width=device-width,
+        initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>#map_85c231cc671b4e208f33ce1e3804a2cc {
+        position: relative;
+        width: 100.0%;
+        height: 100.0%;
+        left: 0.0%;
+        top: 0.0%;
+        }
+    </style>
+    <script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+</head>
+<body>    
+    
+    <div class="folium-map" id="map_85c231cc671b4e208f33ce1e3804a2cc" ></div>
 </body>
+<script>    
+    
+    
+        var bounds = null;
+    
 
-</html>
+    var map_85c231cc671b4e208f33ce1e3804a2cc = L.map(
+        'map_85c231cc671b4e208f33ce1e3804a2cc', {
+        center: [22.2074, 71.9278],
+        zoom: 7,
+        maxBounds: bounds,
+        layers: [],
+        worldCopyJump: false,
+        crs: L.CRS.EPSG3857,
+        zoomControl: true,
+        });
+
+
+    
+    var tile_layer_ef39e950187644f19e25aa2d75b76c6a = L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+        "attribution": null,
+        "detectRetina": false,
+        "maxNativeZoom": 18,
+        "maxZoom": 18,
+        "minZoom": 0,
+        "noWrap": false,
+        "opacity": 1,
+        "subdomains": "abc",
+        "tms": false
+}).addTo(map_85c231cc671b4e208f33ce1e3804a2cc);
+    
+            var heat_map_a37e97f875d644ada7399a8890d92530 = L.heatLayer(
+                [[22.166066, 72.947426, 1.0], [23.601262849999998, 72.37415155167554, 3.0]],
+                {
+                    minOpacity: 0.5,
+                    maxZoom: 13,
+                    max: 1.0,
+                    radius: 10,
+                    blur: 15,
+                    gradient: {"0.4": "blue", "0.65": "lime", "1": "red"}
+                    })
+                .addTo(map_85c231cc671b4e208f33ce1e3804a2cc);
+        
+</script>

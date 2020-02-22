@@ -3,21 +3,17 @@ from model.models import Doctor
 from pymongo import errors
 
 
-def create_doctor(u_name, u_gender, u_contact, u_aadhar, u_certificate):
-    # creates new doctor in database
-    new_doc = Doctor(u_name, u_gender, u_contact, u_aadhar, u_certificate)
+def create_doctor(Email, Name, AadharNo, ContactNo, Gender,CertificateNo):
+    print(CertificateNo)
+    # creates new user in database
+    # emergency = Emergency(EmergencyContactName, EmergencyContactRelation, EmergencyContactNumber)
+    # address = Address(Street1, Street2, City, State, Zip)
+    new_doctor = Doctor(Email=Email, Name=Name, AadharNo=AadharNo, ContactNo=ContactNo,
+                        Gender=Gender, CertificateNo=CertificateNo)
+    return new_doctor
 
-    check_str = new_doc.validity_check()
-    if check_str == 1:
-        try:
-            db_doc.insert_one(new_doc.__dict__)
-            return new_doc.Name + " created with Id " + new_doc.AadharNo
-        except errors.DuplicateKeyError as e:
-            return str("Duplicate Data........")
-        except errors.PyMongoError as e:
-            return str(e)
-        except Exception as e:
-            return str(e)
-    else:
-        print(check_str)
-        return "Failed to create user"
+
+def find_doctor_by_id(u_id):
+
+    doctor = db_doc.find_one({'Email': u_id})
+    return doctor

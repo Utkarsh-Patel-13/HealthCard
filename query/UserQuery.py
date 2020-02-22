@@ -45,3 +45,7 @@ def get_user_aadhar(email):
     user = db_user.find_one({'Email': email})
     return user['AadharNo']
 
+
+def find_user_by_Aadhar(u_id):
+    user = db_user.find_one({'AadharNo': u_id})
+    return user

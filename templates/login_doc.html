@@ -49,24 +49,33 @@
                         </div>
                     </div>
 
-                    <form class="" action="{{url_for('doctor')}}" method="POST" style="border:1px;border-style: solid;border-color:silver;margin-top: 32%;">
+                    <form class="" action="#" method="POST" style="border:1px;border-style: solid;border-color:silver;margin-top: 32%;">
                         <center>
 
                             <h3>Savasthaya Sahayak</h3>
                             <h2>Your Personal health Card</h2><br><br>
                             <h3>Please,Login here</h3>
                             <div class="container">
-                                <label for="uname"><b>Username</b></label>
-                                <input type="text" placeholder="Enter Username" name="uname" required>
-                                <br>
-                                <label for="psw"><b>Password</b></label>
-                                <input type="password" placeholder="Enter Password" name="psw" required>
-                                <br>
-                                <a href="{{url_for('doctor')}}"><button type="submit">Login</button></a>
-                                <br>
-                                <label>
-                                    <input type="checkbox" checked="checked" name="remember"> Remember me
-                                  </label>
+                                {{form.hidden_tag()}}
+
+                                <p>
+
+                                    {{form.Email.label}}<br> {{form.Email}} {% for error in form.Email.errors %}
+                                    <span class="error msg">{{error}}</span> {% endfor %}
+
+                                </p>
+
+                                <p>
+
+                                    {{form.Password.label}}<br> {{form.Password}} {% for error in form.Password.errors %}
+                                    <span class="error msg">{{error}}</span> {% endfor %}
+                                </p>
+
+                                <p>
+
+                                    {{form.submit()}}
+
+                                </p>
                             </div>
 
                             <div class="container" style="background-color:#f1f1f1">
@@ -77,7 +86,7 @@
 
                     <center>
                         <div style="margin-top:3%;">
-                            <a href="{{url_for('newd')}}">click here?don't have a account</a>
+                            <a href="{{url_for('newdoctor')}}">click here?don't have a account</a>
                         </div>
                     </center>
 

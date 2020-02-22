@@ -36,66 +36,80 @@
     <!-- Header part end-->
 
     <!-- banner part start-->
-    <div style="margin-top:100px;">
-        <form action="{{url_for('doctor')}}">
-            <div style="border: 3px solid black; padding: 15px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div style="margin-top:100px;">
+                    <form action="#" method="POST">
 
-                Patient Information
+                        <div class="form-group" style="border: 3px solid black; padding: 15px; font-size: 20px; font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace">
 
-                <br><br><br>
-                <label>AadharNo.: </label>
-                <input type="text" name="aadhar" id="aadhar" readonly placeholder="AadharNo." value={{aadhar}}>
+                            <p style="font-size: 30px;"><b>Doctor Information {{form.hidden_tag()}}</b></p>
+                            <br>
+                            <div>
 
-                <br><br><br>
-                <label>CertificateNo.: </label>
-                <input type="text" name="certificate" id="certi" readonly placeholder="AadharNo." value={{certificate}}>
+                                {{form.Email.label}}<br> {{form.Email}} {% for error in form.Email.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
 
-                <br><br><br>
+                            </div> <br>
+                            <div>
 
-                <label>Name: </label> <br>
-                <input type="text" name="firstname" id="fname" placeholder="First Name" maxlength="15" required>
-                <input type="text" name="midname" id="mname" placeholder="Middle Name" maxlength="15" required>
-                <input type="text" name="lastname" id="lname" placeholder="Last Name" maxlength="15" required>
+                                {{form.AadharNo.label}}<br> {{form.AadharNo}} {% for error in form.AadharNo.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
 
-                <br><br><br>
+                            </div> <br>
+                            <div>
 
-                <label>Email: </label>
-                <input type="email" name="email" id="email" size="40">
+                                {{form.Name.label}}<br> {{form.Name}} {% for error in form.Name.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
 
-                <br><br><br>
+                            </div> <br>
+                            <div>
 
-                <label>Gender: </label>
-                <select name="gender" required>
-                                    <option name="male" id="male" value="M">Male</option>
-                                    <option name="female" id="female" value="F">Female</option>
-                                    <option name="other" id="other" value="O">Other</option>
-                                </select>
+                                {{form.Gender.label}}<br> {{form.Gender}} {% for error in form.Gender.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
 
-                <br><br><br>
+                            </div> <br>
 
-                <label>Date Of Birth:</label>
-                <input type="date" name="DOB" id="DOB">
+                            <div>
 
-                <br><br><br>
+                                {{form.ContactNo.label}}<br> {{form.ContactNo}} {% for error in form.ContactNo.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
 
-                <label>Contact Number: </label>
-                <input type="text" name="contact" id="contact" required maxlength="10">
+                            </div> <br>
+                            
+                            <div>
 
-                <br><br><br>
+                                {{form.CertificateNo.label}}<br> {{form.CertificateNo}} {% for error in form.CertificateNo.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
 
-                <label>Hoospital Address: </label><br>
-                <input type="text" name="street1" id="st1" placeholder="Street Address" size="50"><br><br>
-                <input type="text" name="street2" id="st2" placeholder="Street Address Line 2" size="50"><br><br>
-                <input type="text" name="city" id="city" placeholder="City"> &nbsp;&nbsp;&nbsp;
-                <input type="text" name="state" id="state" placeholder="State"> <br><br>
-                <input type="text" name="zip" id="zip" placeholder="Area / Zip Code">
+                            </div> <br>
 
-            </div>
-            <center>
-                <input type="submit" name="submit" value="Submit" id="submitBtn">&nbsp;&nbsp;
-                <input type="reset" name="reset" value="Reset" id="resetBtn">&nbsp;&nbsp;
-            </center>
-        </form </div>
+                            <div>
+
+                                {{form.Password.label}}<br> {{form.Password}} {% for error in form.Password.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+                            </div> <br>
+                            <div>
+
+                                {{form.Password_confirm.label}}<br> {{form.Password_confirm}} {% for error in form.Password_confirm.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+                            </div> <br>
+
+                            <div>
+
+                                {{form.submit()}} &nbsp&nbsp&nbsp
+                                <input type="reset">
+
+                            </div> <br>
+                        </div> <br>
+
+                    </form>
+
+                </div> <br>
+            </div> <br>
+        </div> <br>
+    </div> <br>
         <!-- banner part start-->
 
 
