@@ -6,7 +6,6 @@ from databaseConnections import db_user
 from flask import Flask, request, render_template
 from model.models import Address, Emergency
 import requests
-import urllib, json
 from databaseConnections import db_user
 
 """
@@ -29,15 +28,3 @@ print(x)
 for i in x:
     print(i['Email'])
 """
-"""
-URL = 'http://127.0.0.1:5000/edit_info_patient?csrf_token=IjZmMDVmMDNiN2ZlMDlhNDg1NjU0ZmZkZGM5Mzk5ODQzMTYzZGNiOTMi.XlCp9A.L3eBcnh4JYx3TjfyEAyqdAAXnF0&Name=Priyang+Patel&Gender=Male&ContactNo=9586244772&DOB=20%2F12%2F1999&Street1=13+Prabhupark+Society&Street2=Radhanpur+Road&City=Mehsana&State=Gujarat&Zip=384002&EmergencyContactName=Harshadbhai+Patel&EmergencyContactRelation=Father&EmergencyContactNumber=9979518938&submit=+Register+'
-
-response = urlopen(URL)
-data = json.loads(response.read())
-
-print(data)
-"""
-Email = 'namra@gmail.com'
-Name = 'ASD'
-user = db_user.update_one({"Email": Email}, {"$set": {"Name": Name}})
-print(user)

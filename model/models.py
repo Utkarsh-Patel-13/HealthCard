@@ -1,6 +1,6 @@
 from os.path import expanduser
 import os
-from mongoengine import Document, StringField, IntField
+from mongoengine import Document, StringField
 from werkzeug.security import generate_password_hash, check_password_hash
 
 

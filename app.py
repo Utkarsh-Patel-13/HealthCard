@@ -5,7 +5,6 @@ from forms import RegistrationFormUser, LoginFormUser, EditUserForm
 from model.models import Emergency, Address, User
 from query.NewsQuery import find_latest_news
 from query.UserQuery import create_user, find_user_by_id, get_user_aadhar, update_user
-import json
 
 app = Flask(__name__)
 
