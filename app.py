@@ -418,9 +418,6 @@ def newlab():
         AadharNo = form.AadharNo.data
         Name = form.Name.data
         ContactNo = form.ContactNo.data
-        # Gender = form.Gender.data
-        # CertificateNo = form.CertificateNo.data
-        # print(CertificateNo)
         lab = create_lab(Email=Email, Name=Name, AadharNo=AadharNo,
                          ContactNo=ContactNo)
 
@@ -429,11 +426,11 @@ def newlab():
         try:
             lab.save()
             flash("New ID Created Successfully", "success")
-            return redirect("/login_doc")
+            return redirect("/login_lab")
         except Exception as e:
             flash("Failed to create user, try again")
             print(e)
-            return redirect('/newdoctor')
+            return redirect('/newlab')
 
     return render_template('newlab.html', form=form)
 
@@ -441,43 +438,50 @@ def newlab():
 @app.route('/login_lab', methods=["GET", "POST"])
 def loginlab():
     if session.get('labname'):
-        return redirect("/Lab")
+        Email = session.get('labname')
+        user = User.objects(Email=Email).first()
+        name = user['Name']
+        name = "".join(name.split())
+        return redirect("/Lab/" + name.__str__())
 
     form = LoginFormLab()
     if form.validate_on_submit():
         Email = form.Email.data
-        global currentLab
-        currentLab = Email
-        print(Email, " ", currentLab)
         Password = form.Password.data
 
-        lab = Lab.objects(Email=Email).first()
-        if lab and lab.get_password(Password):
-            # session['user_id'] = user.user_id
-            session['labname'] = lab.Email
-            return redirect("/Lab")
-        else:
-            flash("Incorrect username or password")
+        try:
+            lab = Lab.objects(Email=Email).first()
+            print(lab)
+            if lab and lab.get_password(Password):
+                login_user(lab, remember=True)
+                print("asd")
+                session['labname'] = lab.Email
+                name = lab['Name']
+                print(name)
+                name = "".join(name.split())
+                return redirect("/Lab/" + name.__str__())
+            else:
+                print("Incorrect username or password")
+        except Exception as e:
+            print(e)
     return render_template('login_lab.html', form=form)
 
 
-@app.route('/Lab', methods=["GET", "POST"])
+@app.route('/Lab/<name>', methods=["GET", "POST"])
 @login_required
-def lab():
+def lab(name):
     form = SearchPatient()
     if form.validate_on_submit():
         global AadharNo
         AadharNo = form.AadharNo.data
-        global patient
-        patient = find_user_by_Aadhar(AadharNo)
-        return redirect('lab_w_patient')
+        return redirect('/lab_w_patient')
     return render_template('Lab.html', form=form)
 
 
 @app.route('/lab_info')
 @login_required
 def lab_info():
-    currentlab = session('labname')
+    currentlab = session.get('labname')
     lab = find_lab_by_id(currentlab)
     if lab is not None:
         return render_template('lab_info.html', Name=lab['Name'], Email=lab['Email'],
@@ -495,7 +499,8 @@ def lab_w_patient():
 @app.route('/info_patient_by_lab')
 @login_required
 def info_patient_by_lab():
-    global patient
+    global AadharNo
+    patient = find_user_by_Aadhar(AadharNo)
     if patient is not None:
         emergency_list = list(patient['EmergencyContact'].split(","))
         return render_template('info_patient.html', Name=patient['Name'], Email=patient['Email'],
@@ -520,6 +525,8 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0',
+    app.run(debug=True, host="127.0.0.1",
             port=9000,
             threaded=True)
+
+
