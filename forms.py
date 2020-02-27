@@ -100,3 +100,22 @@ class LoginFormLab(FlaskForm):
     Email = StringField("Email",validators=[DataRequired(), Email()])
     Password = PasswordField("Password", validators=[DataRequired(), Length(min=6, max=15)])
     submit = SubmitField("Login")
+
+
+class EntryFormPre(FlaskForm):
+    P1 = StringField("Enter Prescription:")
+    P2 = StringField("Enter Prescription:")
+    P3 = StringField("Enter Prescription:")
+    P4 = StringField("Enter Prescription:")
+    P5 = StringField("Enter Prescription:")
+    D1 = StringField("Enter corresponding Disease")
+    D2 = StringField("Enter corresponding Disease")
+    D3 = StringField("Enter corresponding Disease")
+    D4 = StringField("Enter corresponding Disease:")
+    D5 = StringField("Enter corresponding Disease:")
+    T1 = StringField("Enter Schedule:")
+    T2 = StringField("Enter Schedule:")
+    T3 = StringField("Enter Schedule:")
+    T4 = StringField("Enter Schedule:")
+    T5 = StringField("Enter Schedule:")
+    submit = SubmitField(" Register ")

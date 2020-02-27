@@ -7,7 +7,7 @@ from werkzeug.utils import secure_filename
 
 from databaseConnections import db_user
 from forms import RegistrationFormUser, LoginFormUser, EditUserForm, RegistrationFormDoctor, LoginFormDoctor, \
-    SearchPatient, LoginFormLab, RegistrationFormLab
+    SearchPatient, LoginFormLab, RegistrationFormLab, EntryFormPre
 from model.models import Emergency, Address, User, Doctor, USER, Lab
 from query.DoctorQuery import create_doctor, find_doctor_by_id
 from query.LabQuery import find_lab_by_id, create_lab
@@ -15,7 +15,7 @@ from query.NewsQuery import find_latest_news
 from query.UserQuery import create_user, find_user_by_id, get_user_aadhar, update_user, find_user_by_Aadhar, find_user
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from model.models import User
-
+from query.preQuery import create_pre
 
 app = Flask(__name__)
 
@@ -156,9 +156,6 @@ def report_patient():
     user = find_user_by_Aadhar(aadhar)
     r = user["Reports"]
     return render_template('report_patient.html', files=r)
-    #return mongo.send_file(filename)
-
-    #return render_template('report_patient.html', files=files)
 
 
 @app.route('/return_files/<name>')
@@ -522,6 +519,41 @@ def logout():
         session.pop('labname')
     logout_user()
     return redirect("/index")
+
+
+@app.route("/precautions", methods=["GET", "POST"])
+def upload_pre():
+    global AadharNo
+    form = EntryFormPre()
+
+    if form.is_submitted():
+        P1 = form.P1.data
+        P2 = form.P2.data
+        P3 = form.P3.data
+        P4 = form.P4.data
+        P5 = form.P5.data
+        D1 = form.D1.data
+        D2 = form.D2.data
+        D3 = form.D3.data
+        D4 = form.D4.data
+        D5 = form.D5.data
+        T1 = form.T1.data
+        T2 = form.T2.data
+        T3 = form.T3.data
+        T4 = form.T4.data
+        T5 = form.T5.data
+
+        pre = create_pre(P1=P1, P2=P2, P3=P3, P4=P4, P5=P5, D1=D1, D2=D2, D3=D3, D4=D4, D5=D5, T1=T1, T2=T2, T3=T3,
+                         T4=T4, T5=T5, preAadhar=AadharNo)
+        try:
+            pre.save()
+            flash("New ID Created Successfully", "success")
+            return render_template("upload_pre.html", form=form)
+        except Exception as e:
+            flash("Failed to create user, try again")
+            print(e)
+            return render_template('upload_pre.html', form=form)
+    return render_template('upload_pre.html', form=form)
 
 
 if __name__ == '__main__':

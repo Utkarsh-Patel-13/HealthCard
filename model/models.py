@@ -143,3 +143,23 @@ class Lab(UserMixin, Document):
             return True
         else:
             return False
+
+
+class Pre(UserMixin, Document):
+    P1 = StringField()
+    P2 = StringField()
+    P3 = StringField()
+    P4 = StringField()
+    P5 = StringField()
+    D1 = StringField()
+    D2 = StringField()
+    D3 = StringField()
+    D4 = StringField()
+    D5 = StringField()
+    T1 = StringField()
+    T2 = StringField()
+    T3 = StringField()
+    T4 = StringField()
+    T5 = StringField()
+    preAadhar = StringField()
+

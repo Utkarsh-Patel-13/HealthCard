@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>medical card</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
+    <style>
+        body{
+            background-image: url(/static/img/background.png);
+    /* background-color: lightseagreen; */
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+        }
+        .card {
+  box-shadow: 0 -5px 30px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+    </style>
+</head>
+
+<body>
+    <!--::header part start::-->
+    
+    <!-- Header part end-->
+
+    <!-- banner part start-->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div style="margin-top:100px;">
+                    <br>
+                    <form action="#" method="POST" >
+
+                        <div class="card" style="padding: 10px; font-size: 20px; font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace">
+
+                            <p style="font-size: 30px;"><b>Prescription{{form.hidden_tag()}}</b></p>
+                            <br>
+                            <div>
+
+                                {{form.P1.label}}<br> {{form.P1}} {% for error in form.P1.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %} 
+                                <br>
+                                {{form.D1.label}}<br> {{form.D1}} {% for error in form.D1.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+                                <br>
+                                {{form.T1.label}}<br> {{form.T1}} {% for error in form.T1.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+
+                            </div> <br>
+                            <div>
+
+                                {{form.P2.label}}<br> {{form.P2}} {% for error in form.P2.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %} 
+                                <br>
+                                {{form.D2.label}}<br> {{form.D2}} {% for error in form.D2.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+                                <br>
+                                {{form.T2.label}}<br> {{form.T2}} {% for error in form.T2.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+                            </div> <br>
+                            <div>
+
+                                {{form.P3.label}}<br> {{form.P3}} {% for error in form.P3.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %} 
+                                <br>
+                                {{form.D3.label}}<br> {{form.D3}} {% for error in form.D3.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+                                <br>
+                                {{form.T3.label}}<br> {{form.T3}} {% for error in form.T3.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+                            </div> <br>
+                            <div>
+                                {{form.P4.label}}<br> {{form.P4}} {% for error in form.P4.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %} 
+                                <br>
+                                {{form.D4.label}}<br> {{form.D4}} {% for error in form.D4.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+                                <br>
+                                {{form.T4.label}}<br> {{form.T4}} {% for error in form.T4.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+                            </div> <br>
+
+                            <div>
+                                {{form.P5.label}}<br> {{form.P5}} {% for error in form.P5.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %} 
+                                <br>
+                                {{form.D5.label}}<br> {{form.D5}} {% for error in form.D5.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+                                <br>
+                                {{form.T5.label}}<br> {{form.T5}} {% for error in form.T5.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+                            </div> <br>
+                            
+                            <div>
+
+                                {{form.submit()}} &nbsp&nbsp&nbsp
+                                <input type="reset">
+
+                            </div> <br>
+                        </div> <br>
+
+                    </form>
+
+                </div> <br>
+            </div> <br>
+        </div> <br>
+    </div> <br>
+        <!-- banner part start-->
+
+
+        <!-- footer part start-->
+        <footer class="footer-area">
+
+            <div class="container">
+                <div class="row justify-content-between">
+                    <div class="col-xl-2 col-md-4 col-sm-6 single-footer-widget">
+                        <div>
+                            <ul>
+                                <li><a href="#" style="font-size:25px;">About us</a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+
+        </footer>
+
+        <!-- footer part end-->
+
+        <!-- jquery plugins here-->
+
+        <script src="/static/js/jquery-1.12.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/custom.js"></script>
+</body>
+
+</html>
