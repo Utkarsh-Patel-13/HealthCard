@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <title>Laboratory</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="/static/css/animate.css"> -->
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
+  <!-- Custom styles for this template -->
+  <link href="/static/css/simple-sidebar.css" rel="stylesheet">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/animate.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
+</head>
+
+<body>
+    <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">MENU</div>
+      <div class="list-group list-group-flush">
+        <a href="{{url_for('md_info')}}" target="window" class="list-group-item list-group-item-action bg-light">Home</a>
+        <a href="{{url_for('md_info')}}" target="window" class="list-group-item list-group-item-action bg-light">Profile</a>
+       <!--  <a href="report_patient.html" target="window" class="list-group-item list-group-item-action bg-light">All Reports</a> -->
+        <a href="{{url_for('currentnews')}}" target="window" class="list-group-item list-group-item-action bg-light">NEWS</a>
+        <a href="{{url_for('logout')}}" class="list-group-item list-group-item-action bg-light">Log Out</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">CLICK HERE</button>
+
+        
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+       
+            <form action="#" method="POST">
+
+              <div class="form-group" style="border: 3px solid black; padding: 15px; font-size: 20px; font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace">
+
+                  <p style="font-size: 30px;"><b>Patient upload {{form.hidden_tag()}}</b></p>
+                  <div>
+
+                      {{form.AadharNo.label}}<br> {{form.AadharNo}} {% for error in form.AadharNo.errors %}
+                      <br><span class="error msg">{{error}}</span> {% endfor %}
+                      {{form.submit()}}
+                  </div>
+                  
+              </div>    
+            </form>
+                               
+                            
+          </ul>
+        </div>
+        <a class="navbar-brand" href="index.html"> <img src="/static/img/service.png" alt="logo" width="50px" height="50px"> </a>
+      </nav>
+
+      
+        <!-- <h1 class="mt-4">Simple Sidebar</h1> -->
+        <div style="margin: 1px">
+        <iframe src="{{url_for('md_info')}}" name="window" style="width:100%;height: 88.3vh;border-style: solid;border-color: silver;margin-top: 0px;margin-left: 0px;">
+                        
+                            
+                    
+                             
+        </iframe> 
+     
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+  <script src="/static/js/jquery-1.12.1.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+</body>
+
+</html>

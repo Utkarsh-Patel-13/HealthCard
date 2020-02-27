@@ -15,3 +15,4 @@ db_doc = health_db.doctor
 db_news = health_db.News
 db_lab = health_db.lab
 db_pre=health_db.pre
+db_md=health_db.md

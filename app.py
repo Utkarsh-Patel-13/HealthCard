@@ -4,13 +4,14 @@ from bson import ObjectId
 from flask import Flask, render_template, redirect, session, flash, send_file, request, url_for
 from flask_pymongo import PyMongo
 from werkzeug.utils import secure_filename
-
+from flask_bootstrap import Bootstrap
 from databaseConnections import db_user
 from forms import RegistrationFormUser, LoginFormUser, EditUserForm, RegistrationFormDoctor, LoginFormDoctor, \
-    SearchPatient, LoginFormLab, RegistrationFormLab, EntryFormPre
-from model.models import Emergency, Address, User, Doctor, USER, Lab
+    SearchPatient, LoginFormLab, RegistrationFormLab, EntryFormPre, RegistrationFormMd, LoginFormMd
+from model.models import Emergency, Address, User, Doctor, USER, Lab, Md
 from query.DoctorQuery import create_doctor, find_doctor_by_id
 from query.LabQuery import find_lab_by_id, create_lab
+from query.MdQuery import create_md, find_user_by_Aadhar_M, find_md_by_id
 from query.NewsQuery import find_latest_news
 from query.UserQuery import create_user, find_user_by_id, get_user_aadhar, update_user, find_user_by_Aadhar, find_user
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
@@ -18,7 +19,7 @@ from model.models import User
 from query.preQuery import create_pre
 
 app = Flask(__name__)
-
+Bootstrap(app)
 app.config['MONGO_URI'] = 'mongodb+srv://SPUM:srinking69@myhealthcard-1nsmr.mongodb.net/Health?retryWrites=true&w=majority'
 mongo = PyMongo(app)
 
@@ -295,7 +296,7 @@ def newdoctor():
 
 @app.route('/login_doc', methods=["GET", "POST"])
 def logind():
-    if session.get('doctorname') is not None:
+    if session.get('doctorname'):
         Email = session.get('doctorname')
         doctor = Doctor.objects(Email=Email).first()
         name = doctor['Name']
@@ -508,19 +509,6 @@ def info_patient_by_lab():
         return render_template('info_patient.html')
 
 
-@app.route("/logout")
-@login_required
-def logout():
-    if session.get('username') is not None:
-        session.pop('username')
-    if session.get('doctorname') is not None:
-        session.pop('doctorname')
-    if session.get('labname') is not None:
-        session.pop('labname')
-    logout_user()
-    return redirect("/index")
-
-
 @app.route("/precautions", methods=["GET", "POST"])
 def upload_pre():
     global AadharNo
@@ -554,6 +542,133 @@ def upload_pre():
             print(e)
             return render_template('upload_pre.html', form=form)
     return render_template('upload_pre.html', form=form)
+
+
+@app.route('/newmd', methods=["GET", "POST"])
+def newmd():
+    if session.get('mdname'):
+        return redirect('/index')
+
+    form = RegistrationFormMd()
+
+    if form.validate_on_submit():
+        Email = form.Email.data
+        Password = form.Password.data
+        AadharNo = form.AadharNo.data
+        Name = form.Name.data
+        ContactNo = form.ContactNo.data
+        md = create_md(Email=Email, Name=Name, AadharNo=AadharNo,
+                       ContactNo=ContactNo)
+
+        md.set_password(Password)
+
+        try:
+            md.save()
+            flash("New ID Created Successfully", "success")
+            return redirect("/loginmd")
+        except Exception as e:
+            flash("Failed to create user, try again")
+            print(e)
+            return redirect('/newmedical')
+
+    return render_template('newmedical.html', form=form)
+
+
+@app.route('/loginmd', methods=["GET", "POST"])
+def loginmd():
+    if session.get('mdname'):
+        Email = session.get('mdname')
+        md = Md.objects(Email=Email).first()
+        name = md['Name']
+        name = "".join(name.split())
+        return redirect("/Medical")
+
+    form = LoginFormMd()
+    if form.validate_on_submit():
+        Email = form.Email.data
+        Password = form.Password.data
+
+        md = Md.objects(Email=Email).first()
+        if md and md.get_password(Password):
+            login_user(md, remember=True)
+            session['mdname'] = md.Email
+            name = md['Name']
+            name = "".join(name.split())
+            return redirect("/Medical")
+        else:
+            flash("Incorrect username or password")
+    return render_template('loginmd.html', form=form)
+
+
+@app.route('/Medical', methods=["GET", "POST"])
+def Medical():
+    form = SearchPatient()
+    if form.validate_on_submit():
+        global AadharNo
+        AadharNo = form.AadharNo.data
+        return redirect('md_w_patient')
+    return render_template('Medical.html', form=form)
+
+
+@app.route('/md_info')
+def md_info():
+    currentMd = session.get('mdname')
+    md = find_md_by_id(currentMd)
+    print(md)
+    if md is not None:
+        return render_template('md_info.html', Name=md['Name'], Email=md['Email'],
+                               Aadhar=md['AadharNo'])
+    else:
+        return render_template('md_info.html')
+
+
+@app.route('/md_w_patient')
+def md_w_patient():
+    return render_template('md_w_patient.html')
+
+
+@app.route('/view_pre')
+def view_pre():
+    global AadharNo
+    patientM = find_user_by_Aadhar_M(AadharNo)
+    if patientM is not None:
+        return render_template('view_pre.html', P1=patientM['P1'], P2=patientM['P2'], P3=patientM['P3'],
+                               P4=patientM['P4'], P5=patientM['P5'],
+                               D1=patientM['D1'], D2=patientM['D2'], D3=patientM['D3'], D4=patientM['D4'],
+                               D5=patientM['D5'],
+                               T1=patientM['T1'], T2=patientM['T2'], T3=patientM['T3'], T4=patientM['T4'],
+                               T5=patientM['T5'])
+    else:
+        return render_template('view_pre.html')
+
+
+@app.route('/info_patient_by_md')
+def info_patient_by_md():
+    global AadharNo
+    patient = find_user_by_Aadhar(AadharNo)
+    if patient is not None:
+        emergency_list = list(patient['EmergencyContact'].split(","))
+        return render_template('info_patient.html', Name=patient['Name'], Email=patient['Email'],
+                               Aadhar=patient['AadharNo'], Gender=patient['Gender'], DOB=patient['DOB'],
+                               Contact=patient['ContactNo'], Address=patient['Address'],
+                               e_Name=emergency_list[0], e_Rel=emergency_list[1], e_Contact=emergency_list[2])
+    else:
+        return render_template('info_patient.html')
+
+
+@app.route("/logout")
+@login_required
+def logout():
+    if session.get('username') is not None:
+        session.pop('username')
+    if session.get('doctorname') is not None:
+        session.pop('doctorname')
+    if session.get('labname') is not None:
+        session.pop('labname')
+    if session.get('mdname') is not None:
+        session.pop('mdname')
+    logout_user()
+    return redirect("/index")
 
 
 if __name__ == '__main__':

@@ -1,11 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField , SubmitField, BooleanField, IntegerField,TextAreaField
+from wtforms import StringField, PasswordField , SubmitField, DateField, RadioField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from model.models import User
+from flask_admin import form
 
 
 class LoginFormUser(FlaskForm):
-    Email = StringField("Email",validators=[DataRequired(), Email()])
+    Email = StringField("Email", validators=[DataRequired(), Email()])
     Password = PasswordField("Password", validators=[DataRequired(), Length(min=6, max=15)])
     submit = SubmitField("Login")
 
@@ -16,11 +17,12 @@ class RegistrationFormUser(FlaskForm):
     Password_confirm = PasswordField("Confirm Password",
                                      validators=[DataRequired(), Length(min=6, max=15), EqualTo('Password')])
     Name = StringField("Name", validators=[DataRequired(), Length(min=2, max=55)])
-    Gender = StringField("Gender", validators=[DataRequired(), Length(min=2, max=55)])
+    Gender = RadioField("Gender", validators=[DataRequired(), Length(min=2, max=55)],
+                        choices=[('Male', 'Male'), ('Female', 'Female')])
     ContactNo = StringField("Contact",
                              validators=[DataRequired(), Length(min=10, max=13)])
     AadharNo = StringField("Aadhar", validators=[DataRequired(), Length(min=12, max=12)])
-    DOB = StringField("DOB", validators=[DataRequired(), Length(min=2, max=55)])
+    DOB = StringField("DOB")
     Street1 = StringField("Street Address Line 1", validators=[DataRequired()])
     Street2 = StringField("Street Address Line 2", validators=[DataRequired()])
     City = StringField("City", validators=[DataRequired()])
@@ -119,3 +121,20 @@ class EntryFormPre(FlaskForm):
     T4 = StringField("Enter Schedule:")
     T5 = StringField("Enter Schedule:")
     submit = SubmitField(" Register ")
+
+
+class RegistrationFormMd(FlaskForm):
+    Email = StringField("Email", validators=[DataRequired(), Email()])
+    Password = PasswordField("Password", validators=[DataRequired(), Length(min=6, max=15)])
+    Password_confirm = PasswordField("Confirm Password",
+                                     validators=[DataRequired(), Length(min=6, max=15), EqualTo('Password')])
+    Name = StringField("Name", validators=[DataRequired(), Length(min=2, max=55)])
+    ContactNo = StringField("Contact",
+                             validators=[DataRequired(), Length(min=10, max=13)])
+    AadharNo = StringField("Aadhar", validators=[DataRequired(), Length(min=12, max=12)])
+    submit = SubmitField(" Register ")
+
+class LoginFormMd(FlaskForm):
+    Email = StringField("Email",validators=[DataRequired(), Email()])
+    Password = PasswordField("Password", validators=[DataRequired(), Length(min=6, max=15)])
+    submit = SubmitField("Login")
