@@ -2,8 +2,10 @@ import os
 
 from bson import ObjectId
 from flask import Flask, render_template, redirect, session, flash, send_file, request, url_for
+from flask_pymongo import PyMongo
 from werkzeug.utils import secure_filename
 
+from databaseConnections import db_user
 from forms import RegistrationFormUser, LoginFormUser, EditUserForm, RegistrationFormDoctor, LoginFormDoctor, \
     SearchPatient
 from model.models import Emergency, Address, User, Doctor, USER
@@ -15,6 +17,9 @@ from model.models import User
 
 
 app = Flask(__name__)
+
+app.config['MONGO_URI'] = 'mongodb+srv://SPUM:srinking69@myhealthcard-1nsmr.mongodb.net/Health?retryWrites=true&w=majority'
+mongo = PyMongo(app)
 
 app.config['SECRET_KEY'] = b'\xb0\xf4\xe8\\U\x8d\xba\xb4B2h\x88\xf9\x08\xb1J'
 UPLOAD_FOLDER = '/home/utkarsh/HealthServer/UserData/'
@@ -70,7 +75,7 @@ def newpatient():
                            ContactNo=ContactNo, Gender=Gender, DOB=DOB,
                            Street1=Street1, Street2=Street2, City=City, State=State, Zip=Zip,
                            EmergencyContactName=EmergencyContactName, EmergencyContactRelation=EmergencyContactRelation,
-                           EmergencyContactNumber=EmergencyContactNumber)
+                           EmergencyContactNumber=EmergencyContactNumber, Reports=0)
 
         user.set_password(Password)
 
@@ -100,16 +105,19 @@ def loginp():
     if form.validate_on_submit():
         Email = form.Email.data
         Password = form.Password.data
+        try:
+            user = User.objects(Email=Email).first()
+            if user and user.get_password(Password):
+                login_user(user, remember=True)
+                session['username'] = user.Email
+                name = user['Name']
 
-        user = User.objects(Email=Email).first()
-        if user and user.get_password(Password):
-            login_user(user, remember=True)
-            session['username'] = user.Email
-            name = user['Name']
-            name = "".join(name.split())
-            return redirect("/Patient/" + name.__str__())
-        else:
-            print("Incorrect username or password")
+                name = "".join(name.split())
+                return redirect("/Patient/" + name.__str__())
+            else:
+                print("Incorrect username or password")
+        except Exception as e:
+            print(e)
     return render_template('login_patient.html', form=form)
 
 
@@ -141,21 +149,20 @@ def report_patient():
     elif AadharNo is not None:
         aadhar = AadharNo
 
-    location = os.path.join('/home/utkarsh/HealthServer/UserData/', aadhar)
-    files = []
+    # return render_template('report_patient.html', files=files)
 
-    for r, d, f in os.walk(location):
-        for item in f:
-            if '.pdf' in item:
-                js = {'fname': item.__str__()}
-                files.append(js)
+    user = find_user_by_Aadhar(aadhar)
+    r = user["Reports"]
+    return render_template('report_patient.html', files=r)
+    #return mongo.send_file(filename)
 
-    return render_template('report_patient.html', files=files)
+    #return render_template('report_patient.html', files=files)
 
 
 @app.route('/return_files/<name>')
 @login_required
 def return_files_tut(name):
+    print(name)
     try:
         currentUser = session.get('username')
         global AadharNo
@@ -165,7 +172,10 @@ def return_files_tut(name):
         elif AadharNo is not None:
             aadhar = AadharNo
         path = os.path.join('/home/utkarsh/HealthServer/UserData/', aadhar, name)
-        return send_file(path, attachment_filename=name)
+        user = find_user_by_Aadhar(aadhar)
+        filename = user['Rnames'][int(name)]
+        return mongo.send_file(filename)
+        #return send_file(path, attachment_filename=name)
     except Exception as e:
         return str(e)
 
@@ -364,7 +374,14 @@ def info_patient_by_doctor():
 @app.route('/upload_report', methods=['GET', 'POST'])
 @login_required
 def upload_report():
+    currentUser = session.get('username')
     global AadharNo
+    aadhar = ""
+    if currentUser is not None:
+        aadhar = get_user_aadhar(currentUser)
+    elif AadharNo is not None:
+        aadhar = AadharNo
+
     if request.method == 'POST':
         if 'file' not in request.files:
             flash('No file part')
@@ -374,9 +391,16 @@ def upload_report():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
+            file.filename = aadhar + "-" + file.filename
             filename = secure_filename(file.filename)
-            app.config['UPLOAD_FOLDER'] = os.path.join(UPLOAD_FOLDER, AadharNo)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            mongo.save_file(filename, file)
+
+            user = find_user_by_Aadhar(aadhar)
+            reports = user["Reports"]
+            reports = reports + 1
+            user['Rnames'].append(file.filename)
+            db_user.update_one({"AadharNo": aadhar}, {"$set": {"Reports": reports, "Rnames": user['Rnames']}})
+
             return render_template('upload_report.html')
     return render_template('upload_report.html')
 
@@ -389,7 +413,6 @@ def logout():
     if session.get('doctorname') is not None:
         session.pop('doctorname')
     logout_user()
-    print("Asd")
     return redirect("/index")
 
 

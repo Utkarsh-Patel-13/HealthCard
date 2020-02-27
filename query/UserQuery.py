@@ -6,12 +6,14 @@ from pymongo import errors
 
 
 def create_user(Email, Name, AadharNo, ContactNo, Gender, DOB, Street1, Street2,
-                City, State, Zip, EmergencyContactName, EmergencyContactRelation, EmergencyContactNumber):
+                City, State, Zip, EmergencyContactName, EmergencyContactRelation, EmergencyContactNumber, Reports):
     # creates new user in database
     emergency = Emergency(EmergencyContactName, EmergencyContactRelation, EmergencyContactNumber)
     address = Address(Street1, Street2, City, State, Zip)
     new_user = User(Email=Email, Name=Name, AadharNo=AadharNo, ContactNo=ContactNo,
-                    Gender=Gender, DOB=DOB, Address=address.__repr__(), EmergencyContact=emergency.__repr__())
+                    Gender=Gender, DOB=DOB, Address=address.__repr__(), EmergencyContact=emergency.__repr__(),
+                    Reports=Reports)
+
 
     new_user.create_user_folder()
 
@@ -20,10 +22,8 @@ def create_user(Email, Name, AadharNo, ContactNo, Gender, DOB, Street1, Street2,
 
 def update_user(Email, Name, ContactNo, Gender, DOB,
                 Street1, Street2, City, State, Zip,
-                EmergencyContactName, EmergencyContactRelation, EmergencyContactNumber):
-    print(Email, Name, ContactNo, Gender, DOB,
-                Street1, Street2, City, State, Zip,
-                EmergencyContactName, EmergencyContactRelation, EmergencyContactNumber)
+                EmergencyContactName, EmergencyContactRelation, EmergencyContactNumber, Reports):
+
     la = [Street1, Street2, City, State, Zip]
     le = [EmergencyContactName, EmergencyContactRelation, EmergencyContactNumber]
     address = ','.join(la)
@@ -31,7 +31,7 @@ def update_user(Email, Name, ContactNo, Gender, DOB,
     try:
         user = db_user.update_one({"Email": Email}, {"$set": {"Name": Name, "ContactNo": ContactNo, "Gender": Gender,
                                                               "DOB": DOB, "Address": address,
-                                                              "EmergencyContact": emergency}})
+                                                              "EmergencyContact": emergency, "Reports": Reports}})
         return user
     except Exception as e:
         print(e)
