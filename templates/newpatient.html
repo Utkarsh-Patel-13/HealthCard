@@ -8,7 +8,9 @@
     <title>medical card</title>
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/animate.css">
+    <link rel="stylesheet" href="/static/css/style2.css">
     <link rel="stylesheet" href="/static/css/style.css?v={CURRENT_TIMESTAMP}">
+     <link href="https://fonts.googleapis.com/css?family=Alice&display=swap" rel="stylesheet">
     <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
 </head>
 
@@ -42,112 +44,111 @@
                 <div style="margin-top:100px;">
                     <form action="#" method="POST">
 
-                        <div class="form-group" style="border: 3px solid black; padding: 15px; font-size: 20px; font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace">
+                        <div class="card" style="padding: 15px; font-size: 20px; font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace">
 
                             <p style="font-size: 30px;"><b>Patient Information {{form.hidden_tag()}}</b></p>
                             <br>
                             <div>
 
-                                {{form.Email.label}}<br> {{form.Email}} {% for error in form.Email.errors %}
+                                {{form.Email.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Email(style="border-radius:15px")}} {% for error in form.Email.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
                             <div>
 
-                                {{form.AadharNo.label}}<br> {{form.AadharNo}} {% for error in form.AadharNo.errors %}
+                                {{form.AadharNo.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.AadharNo(style="border-radius:15px")}} {% for error in form.AadharNo.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
                             <div>
 
-                                {{form.Name.label}}<br> {{form.Name}} {% for error in form.Name.errors %}
+                                {{form.Name.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Name(style="border-radius:15px")}} {% for error in form.Name.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
                             <div>
-                                {{form.Gender.label}}<br> {{form.Gender}} {% for error in form.Gender.errors %}
-                                <br><span class="error msg">{{error}}</span> {% endfor %}
-
-                            </div> <br>
-
-                            <div>
-
-                                {{form.ContactNo.label}}<br> {{form.ContactNo}} {% for error in form.ContactNo.errors %}
-                                <br><span class="error msg">{{error}}</span> {% endfor %}
-
-                            </div> <br>
-                            <div>
-
-                                {{form.DOB.label}}<br> {{form.DOB}} {% for error in form.DOB.errors %}
+                                {{form.Gender.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Gender(style="border-radius:15px")}} {% for error in form.Gender.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
 
                             <div>
 
-                                {{form.Street1.label}}<br> {{form.Street1}} {% for error in form.Street1.errors %}
+                                {{form.ContactNo.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.ContactNo(style="border-radius:15px")}} {% for error in form.ContactNo.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
                             <div>
 
-                                {{form.Street2.label}}<br> {{form.Street2}} {% for error in form.Street2.errors %}
-                                <br><span class="error msg">{{error}}</span> {% endfor %}
-
-                            </div> <br>
-                            <div>
-
-                                {{form.City.label}}<br> {{form.City}} {% for error in form.City.errors %}
-                                <br><span class="error msg">{{error}}</span> {% endfor %}
-
-                            </div> <br>
-                            <div>
-
-                                {{form.State.label}}<br> {{form.State}} {% for error in form.State.errors %}
-                                <br><span class="error msg">{{error}}</span> {% endfor %}
-
-                            </div> <br>
-                            <div>
-
-                                {{form.Zip.label}}<br> {{form.Zip}} {% for error in form.Zip.errors %}
+                                {{form.DOB.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.DOB(style="border-radius:15px")}} {% for error in form.DOB.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
 
                             <div>
 
-                                {{form.EmergencyContactName.label}}<br> {{form.EmergencyContactName}} {% for error in form.EmergencyContactName.errors %}
+                                {{form.Street1.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Street1(style="border-radius:15px")}} {% for error in form.Street1.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
                             <div>
 
-                                {{form.EmergencyContactRelation.label}}<br> {{form.EmergencyContactRelation}} {% for error in form.EmergencyContactRelation.errors %}
+                                {{form.Street2.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Street2(style="border-radius:15px")}} {% for error in form.Street2.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
                             <div>
 
-                                {{form.EmergencyContactNumber.label}}<br> {{form.EmergencyContactNumber}} {% for error in form.EmergencyContactNumber.errors %}
+                                {{form.City.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.City(style="border-radius:15px")}} {% for error in form.City.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+
+                            </div> <br>
+                            <div>
+
+                                {{form.State.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.State(style="border-radius:15px")}} {% for error in form.State.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+
+                            </div> <br>
+                            <div>
+
+                                {{form.Zip.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Zip(style="border-radius:15px")}} {% for error in form.Zip.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
 
                             <div>
 
-                                {{form.Password.label}}<br> {{form.Password}} {% for error in form.Password.errors %}
+                                {{form.EmergencyContactName.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.EmergencyContactName(style="border-radius:15px")}} {% for error in form.EmergencyContactName.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+
+                            </div> <br>
+                            <div>
+
+                                {{form.EmergencyContactRelation.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.EmergencyContactRelation(style="border-radius:15px")}} {% for error in form.EmergencyContactRelation.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+
+                            </div> <br>
+                            <div>
+
+                                {{form.EmergencyContactNumber.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.EmergencyContactNumber(style="border-radius:15px")}} {% for error in form.EmergencyContactNumber.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+
+                            </div> <br>
+
+                            <div>
+
+                                {{form.Password.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Password(style="border-radius:15px")}} {% for error in form.Password.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
                             </div> <br>
                             <div>
 
-                                {{form.Password_confirm.label}}<br> {{form.Password_confirm}} {% for error in form.Password_confirm.errors %}
+                                {{form.Password_confirm.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Password_confirm(style="border-radius:15px")}} {% for error in form.Password_confirm.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
                             </div> <br>
 
-                            <div>
-
-                                {{form.submit()}} &nbsp&nbsp&nbsp
-                                <input type="reset">
+                            <div><br>
+                                {{form.submit(class="btn btn-primary")}} &nbsp&nbsp&nbsp
+                                <input type="reset" class="btn btn-secondary">
 
                             </div> <br>
                         </div> <br>
@@ -176,7 +177,7 @@
                 </div> <br>
             </div> <br>
 
-
+        </div>
     </footer>
 
     <!-- footer part end-->

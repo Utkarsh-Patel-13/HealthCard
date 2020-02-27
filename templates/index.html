@@ -17,6 +17,17 @@
             background-position: center;
         }
     </style>
+    <style>
+        .card {
+          box-shadow: 0 -5px 20px 0 rgba(0, 0, 0, 0.2);
+          transition: 0.3s;
+
+        }
+
+        .card:hover {
+          box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 
 <body>
@@ -26,7 +37,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-12">
                     <nav class="navbar navbar-expand-lg navbar-light">
-                        <a class="navbar-brand" href="{{ url_for('index') }}"> <img src="/static/img/service.png" alt="logo" width="100px" height="100px"> </a>
+                        <a class="navbar-brand" href="{{ url_for('index') }}"> <img src="/static/img/service.png" alt="logo" width="70px" height="70px"> </a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -40,11 +51,11 @@
                                     <a class="nav-link dropdown-toggle" href="SignUp.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:25px;">
                                        Sign up
                                     </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ url_for('newdoctor') }}" style="font-size:25px;">Signup as Doctor</a>
-                                        <a class="dropdown-item" href="{{ url_for('newpatient') }}" style="font-size:25px;">Signup as Patient</a>
-                                        <a class="dropdown-item" href="{{ url_for('newlab') }}" style="font-size:25px;">Laboratory</a>
-                                        <a class="dropdown-item" href="{{ url_for('newmd') }}" style="font-size:25px;">Medical Shop</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: violet">
+                                        <a class="navlink btn btn_2 d-none d-lg-block" href="{{ url_for('newdoctor') }}" style="font-size:25px;color: white; padding: 25px">Doctor</a>
+                                        <a class="navlink btn btn_2 d-none d-lg-block" href="{{ url_for('newpatient') }}" style="font-size:25px;color: white; padding: 25px">Patient</a>
+                                        <a class="navlink btn btn_2 d-none d-lg-block" href="{{ url_for('newlab') }}" style="font-size:25px;color: white; padding: 25px">Laboratory</a>
+                                        <a class="navlink btn btn_2 d-none d-lg-block" href="{{ url_for('newmd') }}" style="font-size:25px;color: white; padding: 25px">Medical</a>
                                     </div>
                                 </li>
                                 <li class="nav-item active">
@@ -55,11 +66,11 @@
                                     <a class="nav-link dropdown-toggle" href="Login.html" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size:25px;">
                                        Log In
                                     </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ url_for('logind') }}" style="font-size:25px;">Login as Doctor</a>
-                                        <a class="dropdown-item" href="{{ url_for('loginp') }}" style="font-size:25px;">Login as Patient</a>
-                                        <a class="dropdown-item" href="{{ url_for('loginlab') }}" style="font-size:25px;">Laboratory</a>
-                                        <a class="dropdown-item" href="{{ url_for('loginmd', name=' ') }}" style="font-size:25px;">Laboratory</a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: violet">
+                                        <a class="navlink btn btn_2 d-none d-lg-block" href="{{ url_for('logind') }}" style="font-size:25px;color: white; padding: 25px">Doctor</a>
+                                        <a class="navlink btn btn_2 d-none d-lg-block" href="{{ url_for('loginp') }}" style="font-size:25px;color: white; padding: 25px">Patient</a>
+                                        <a class="navlink btn btn_2 d-none d-lg-block" href="{{ url_for('loginlab') }}" style="font-size:25px;color: white; padding: 25px">Laboratory</a>
+                                        <a class="navlink btn btn_2 d-none d-lg-block" href="{{ url_for('loginmd', name=' ') }}" style="font-size:25px;color: white; padding: 25px">Medical</a>
                                     </div>
                                 </li>
 
@@ -76,24 +87,31 @@
 
     <!-- banner part start-->
     <section class="banner_part">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-5 col-xl-5">
-                    <div class="banner_text">
-                        <div class="banner_text_iner">
-{#                            <h3>Savasthaya Sahayak</h3>#}
-{#                            <h1>Your Personal health Card</h1>#}
-                        </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 align-items-center">
+
+
+                <div class="navbar navbar-expand-lg navbar-light">
+                    <div class="collapse navbar-collapse ">
+
                     </div>
                 </div>
-                <div class="col-lg-7">
-                    <div class="banner_img">
-{#                        <img src="/static/img/banner_img.png" alt="">#}
-                    </div>
+                <div class="card" action="#" method="POST" style="margin-top: 32%;margin-left:20%;height:40%;width: 60%;">
+                    <center>
+
+                        <h1 style="font-size: 80px;">स्वास्थ्य सहायक</h1>
+                        <h3>India's Digital Health Card</h3><br><br>
+
+                    </center>
                 </div>
+
             </div>
+            </div>
+
         </div>
-    </section>
+    </div>
+</section>
     <!-- banner part start-->
 
 

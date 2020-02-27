@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/animate.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style2.css">
+    <link href="https://fonts.googleapis.com/css?family=Alice&display=swap" rel="stylesheet">
     <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
     <style>
         body{
@@ -67,49 +69,47 @@
                             <br>
                             <div>
 
-                                {{form.Email.label}}<br> {{form.Email}} {% for error in form.Email.errors %}
+                                {{form.Email.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Email(style="border-radius:15px")}} {% for error in form.Email.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
                             <div>
 
-                                {{form.AadharNo.label}}<br> {{form.AadharNo}} {% for error in form.AadharNo.errors %}
+                                {{form.AadharNo.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.AadharNo(style="border-radius:15px")}} {% for error in form.AadharNo.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
                             <div>
 
-                                {{form.Name.label}}<br> {{form.Name}} {% for error in form.Name.errors %}
-                                <br><span class="error msg">{{error}}</span> {% endfor %}
-
-                            </div> <br>
-                            
-
-                            <div>
-
-                                {{form.ContactNo.label}}<br> {{form.ContactNo}} {% for error in form.ContactNo.errors %}
+                                {{form.Name.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Name(style="border-radius:15px")}} {% for error in form.Name.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
 
                             </div> <br>
                             
+
+                            <div>
+
+                                {{form.ContactNo.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.ContactNo(style="border-radius:15px")}} {% for error in form.ContactNo.errors %}
+                                <br><span class="error msg">{{error}}</span> {% endfor %}
+
+                            </div> <br>
+                            
                             
 
                             <div>
 
-                                {{form.Password.label}}<br> {{form.Password}} {% for error in form.Password.errors %}
+                                {{form.Password.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Password(style="border-radius:15px")}} {% for error in form.Password.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
                             </div> <br>
                             <div>
 
-                                {{form.Password_confirm.label}}<br> {{form.Password_confirm}} {% for error in form.Password_confirm.errors %}
+                                {{form.Password_confirm.label(style="font-family: 'Alice';font-size:25px")}}<br> {{form.Password_confirm(style="border-radius:15px")}} {% for error in form.Password_confirm.errors %}
                                 <br><span class="error msg">{{error}}</span> {% endfor %}
                             </div> <br>
 
-                            <div>
-
-                                {{form.submit()}} &nbsp&nbsp&nbsp
-                                <input type="reset">
-
+                            <div><br>
+                                {{form.submit(class="btn btn-primary")}} &nbsp&nbsp&nbsp
+                                <input type="reset" class="btn btn-secondary">
                             </div> <br>
                         </div> <br>
 
@@ -137,7 +137,7 @@
                     </div>
                 </div>
 
-
+            </div>
         </footer>
 
         <!-- footer part end-->

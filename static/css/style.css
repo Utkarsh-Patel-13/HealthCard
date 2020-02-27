@@ -2772,6 +2772,7 @@ ul {
     top: 0;
     width: 100%;
     z-index: 999;
+    background-color: white;
 }
 
 
@@ -2859,10 +2860,11 @@ ul {
 .main_menu .main-menu-item ul li .nav-link {
     color: #242429;
     font-size: 14px;
-    padding: 38px 23px;
+    padding: 5px 45px;
     font-family: "Playfair Display", serif;
     line-height: 13px;
     text-transform: capitalize;
+
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
@@ -2879,6 +2881,29 @@ ul {
     color: #0065e1;
 }
 
+
+.main_menu .main-menu-item ul li .navlink {
+    color: #242429;
+    font-size: 14px;
+    padding: 5px 45px;
+    font-family: "Playfair Display", serif;
+    line-height: 9px;
+    text-transform: capitalize;
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    /* line 61, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_menu.scss */
+    .main_menu .main-menu-item ul li .navlink {
+        padding: 5px 45px;
+    }
+}
+
+
+/* line 72, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_menu.scss */
+
+.main_menu .main-menu-item ul li .navlink:hover {
+    color: #0065e1;
+}
 
 /* line 81, ../../01 cl html template/03_jun 2019/182_medico_html/sass/_menu.scss */
 
@@ -3064,8 +3089,8 @@ ul {
     height: 935px;
     position: relative;
     overflow: hidden;
-    /*background-image: url(../img/img3.png);*/
-    background-image: url(../img/banner_bg.png);
+    background-image: url(../img/background.png);
+    background-color: lightseagreen;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-position: center;

@@ -9,18 +9,8 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/animate.css">
     <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style2.css">
     <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
-    <style>
-        .card {
-  box-shadow: 0 -5px 30px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-  
-}
-
-.card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-    </style>
 </head>
 
 <body>
@@ -60,7 +50,7 @@
                         </div>
                     </div>
 
-                    <form class="card" action="#" method="POST" style="border:1px;border-style: solid;border-radius:15px;border-color:silver;margin-top: 32%;background-color: white;">
+                    <form class="card" action="#" method="POST" style="border:1px;border-style: solid;border-radius:50px;border-color:silver;margin-top: 32%;background-color: white;">
                         <center>
 
                             <h3>Savasthaya Sahayak</h3>
@@ -84,12 +74,12 @@
                                 <br>
                                 <p>
 
-                                    {{form.submit()}}
+                                    {{form.submit(class="btn btn-primary")}}
 
                                 </p>
                                 <br>
                                 
-                            <div class="container" style="background-color:#f1f1f1">
+                            <div class="container">
                                 <span class="psw">Forgot <a href="#">password?</a></span><br>
                                 <a href="{{url_for('newlab')}}">click here?don't have a account</a>
                             </div>
