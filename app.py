@@ -288,8 +288,12 @@ def newdoctor():
 
 @app.route('/login_doc', methods=["GET", "POST"])
 def logind():
-    if session.get('doctorname'):
-        return redirect("/Doctor")
+    if session.get('doctorname') is not None:
+        Email = session.get('doctorname')
+        doctor = Doctor.objects(Email=Email).first()
+        name = doctor['Name']
+        name = "".join(name.split())
+        return redirect("/Doctor/" + name.__str__())
 
     form = LoginFormDoctor()
     if form.validate_on_submit():
@@ -300,16 +304,17 @@ def logind():
         if doctor and doctor.get_password(Password):
             login_user(doctor, remember=True)
             session['doctorname'] = doctor.Email
-
-            return redirect("/Doctor")
+            name = doctor['Name']
+            name = "".join(name.split())
+            return redirect("/Doctor/" + name.__str__())
         else:
             flash("Incorrect username or password")
     return render_template('login_doc.html', form=form)
 
 
-@app.route('/Doctor', methods=["GET", "POST"])
+@app.route('/Doctor/<name>', methods=["GET", "POST"])
 @login_required
-def doctor():
+def doctor(name):
     form = SearchPatient()
     if form.validate_on_submit():
         global AadharNo

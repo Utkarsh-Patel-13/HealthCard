@@ -1,3 +1,4 @@
+import hashlib
 from os.path import expanduser
 import os
 from mongoengine import Document, StringField
@@ -53,10 +54,16 @@ class User(UserMixin, Document):
         return user_folder
 
     def set_password(self, password):
-        self.Password = generate_password_hash(password)
+        result = hashlib.sha256(password.encode())
+        self.Password = result.hexdigest()
 
     def get_password(self, password):
-        return check_password_hash(self.Password, password)
+        result = hashlib.sha256(password.encode())
+        password = result.hexdigest()
+        if self.Password == password:
+            return True
+        else:
+            return False
 
     def create_basic_file(self, basic_file_path):
         u_basic_file = open(basic_file_path, "w")
@@ -84,10 +91,16 @@ class Doctor(UserMixin, Document):
     CertificateNo = StringField()
 
     def set_password(self, password):
-        self.Password = generate_password_hash(password)
+        result = hashlib.sha256(password.encode())
+        self.Password = result.hexdigest()
 
     def get_password(self, password):
-        return check_password_hash(self.Password, password)
+        result = hashlib.sha256(password.encode())
+        password = result.hexdigest()
+        if self.Password == password:
+            return True
+        else:
+            return False
 
 
 class News:
