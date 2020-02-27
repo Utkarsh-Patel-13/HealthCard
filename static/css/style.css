@@ -3064,6 +3064,7 @@ ul {
     height: 935px;
     position: relative;
     overflow: hidden;
+    /*background-image: url(../img/img3.png);*/
     background-image: url(../img/banner_bg.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;

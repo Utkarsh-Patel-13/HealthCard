@@ -1,5 +1,6 @@
-from bson import ObjectId
+#from bson import ObjectId
 from databaseConnections import db_user
+import datetime
 
 """
 add = Address("13 Prabhupark Society", "Radhanpur Road", "Mehsana", "Gujarat", "384002")
@@ -22,10 +23,35 @@ for i in x:
     print(i['Email'])
 """
 
-
+"""
 def find_user(u_id):
     user = db_user.find_one({'_id': ObjectId(u_id)})
     return user
 
 user = find_user("5e503196440c8a31c881f25a")
 print(user)
+"""
+
+
+user = db_user.find()
+
+print(user)
+
+
+user = db_user.find()
+
+print(user)
+
+for i in user:
+    print(i['Email'])
+
+#
+# users = db_user.find_one(
+#     {
+#             "$where": "function() {
+#                 today = new Date();
+#                 today.setHours(0,0,0,0);
+#                 return (this._id.getTimestamp() >= today)
+#             } "
+#     }
+# )

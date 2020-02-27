@@ -10,7 +10,7 @@ from model.models import Emergency, Address, User, Doctor, USER
 from query.DoctorQuery import create_doctor, find_doctor_by_id
 from query.NewsQuery import find_latest_news
 from query.UserQuery import create_user, find_user_by_id, get_user_aadhar, update_user, find_user_by_Aadhar, find_user
-from flask_login import LoginManager, UserMixin, login_required, login_user, logout_user, current_user
+from flask_login import LoginManager, login_required, login_user, logout_user, current_user
 from model.models import User
 
 
@@ -89,32 +89,39 @@ def newpatient():
 @app.route('/login_patient', methods=["GET", "POST"])
 def loginp():
 
+    if session.get('username') is not None:
+        Email = session.get('username')
+        user = User.objects(Email=Email).first()
+        name = user['Name']
+        name = "".join(name.split())
+        return redirect("/Patient/" + name.__str__())
+
     form = LoginFormUser()
     if form.validate_on_submit():
         Email = form.Email.data
         Password = form.Password.data
 
         user = User.objects(Email=Email).first()
-        print(user)
         if user and user.get_password(Password):
             login_user(user, remember=True)
             session['username'] = user.Email
-            return redirect("/Patient")
+            name = user['Name']
+            name = "".join(name.split())
+            return redirect("/Patient/" + name.__str__())
         else:
             print("Incorrect username or password")
     return render_template('login_patient.html', form=form)
 
 
-@app.route('/Patient', methods=["GET", "POST"])
+@app.route('/Patient/<name>', methods=["GET", "POST"])
 @login_required
-def patient():
+def patient(name):
     return render_template('Patient.html')
 
 
-@app.route('/Patient_home')
+@app.route('/Patient/Patient_home')
 @login_required
 def Patient_home():
-    #return render_template('info_patient.html')
     return render_template('Patient_home.html')
 
 
@@ -234,7 +241,6 @@ def edit_info_patient():
 
 
 @app.route('/currentnews')
-@login_required
 def currentnews():
     news = find_latest_news()
     return render_template('currentnews.html', news=news)
@@ -378,8 +384,11 @@ def logout():
     if session.get('doctorname') is not None:
         session.pop('doctorname')
     logout_user()
+    print("Asd")
     return redirect("/index")
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0',
+            port=9000,
+            threaded=True)
