@@ -13,3 +13,4 @@ health_db = client.Health
 db_user = health_db.user
 db_doc = health_db.doctor
 db_news = health_db.News
+db_lab = health_db.lab

@@ -124,3 +124,22 @@ class USER(UserMixin):
         return str(object_id)
 
 
+class Lab(UserMixin, Document):
+    # Certificate Number verification left.
+    Email = StringField(unique=True)
+    Name = StringField()
+    Password = StringField()
+    ContactNo = StringField()
+    AadharNo = StringField()
+
+    def set_password(self, password):
+        result = hashlib.sha256(password.encode())
+        self.Password = result.hexdigest()
+
+    def get_password(self, password):
+        result = hashlib.sha256(password.encode())
+        password = result.hexdigest()
+        if self.Password == password:
+            return True
+        else:
+            return False

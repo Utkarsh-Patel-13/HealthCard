@@ -82,3 +82,21 @@ class LoginFormDoctor(FlaskForm):
     Email = StringField("Email",validators=[DataRequired(), Email()])
     Password = PasswordField("Password", validators=[DataRequired(), Length(min=6, max=15)])
     submit = SubmitField("Login")
+
+
+
+class RegistrationFormLab(FlaskForm):
+    Email = StringField("Email", validators=[DataRequired(), Email()])
+    Password = PasswordField("Password", validators=[DataRequired(), Length(min=6, max=15)])
+    Password_confirm = PasswordField("Confirm Password",
+                                     validators=[DataRequired(), Length(min=6, max=15), EqualTo('Password')])
+    Name = StringField("Name", validators=[DataRequired(), Length(min=2, max=55)])
+    ContactNo = StringField("Contact",
+                             validators=[DataRequired(), Length(min=10, max=13)])
+    AadharNo = StringField("Aadhar", validators=[DataRequired(), Length(min=12, max=12)])
+    submit = SubmitField(" Register ")
+
+class LoginFormLab(FlaskForm):
+    Email = StringField("Email",validators=[DataRequired(), Email()])
+    Password = PasswordField("Password", validators=[DataRequired(), Length(min=6, max=15)])
+    submit = SubmitField("Login")

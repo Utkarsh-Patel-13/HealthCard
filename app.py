@@ -7,9 +7,10 @@ from werkzeug.utils import secure_filename
 
 from databaseConnections import db_user
 from forms import RegistrationFormUser, LoginFormUser, EditUserForm, RegistrationFormDoctor, LoginFormDoctor, \
-    SearchPatient
-from model.models import Emergency, Address, User, Doctor, USER
+    SearchPatient, LoginFormLab, RegistrationFormLab
+from model.models import Emergency, Address, User, Doctor, USER, Lab
 from query.DoctorQuery import create_doctor, find_doctor_by_id
+from query.LabQuery import find_lab_by_id, create_lab
 from query.NewsQuery import find_latest_news
 from query.UserQuery import create_user, find_user_by_id, get_user_aadhar, update_user, find_user_by_Aadhar, find_user
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
@@ -35,6 +36,7 @@ login_manager.init_app(app)
 login_manager.login_view = 'index'
 
 AadharNo = None
+currentLab = None
 
 @app.route('/')
 @app.route('/index')
@@ -162,7 +164,6 @@ def report_patient():
 @app.route('/return_files/<name>')
 @login_required
 def return_files_tut(name):
-    print(name)
     try:
         currentUser = session.get('username')
         global AadharNo
@@ -171,7 +172,6 @@ def return_files_tut(name):
             aadhar = get_user_aadhar(currentUser)
         elif AadharNo is not None:
             aadhar = AadharNo
-        path = os.path.join('/home/utkarsh/HealthServer/UserData/', aadhar, name)
         user = find_user_by_Aadhar(aadhar)
         filename = user['Rnames'][int(name)]
         return mongo.send_file(filename)
@@ -398,11 +398,112 @@ def upload_report():
             user = find_user_by_Aadhar(aadhar)
             reports = user["Reports"]
             reports = reports + 1
-            user['Rnames'].append(file.filename)
+            user["Rnames"].append(file.filename)
             db_user.update_one({"AadharNo": aadhar}, {"$set": {"Reports": reports, "Rnames": user['Rnames']}})
 
             return render_template('upload_report.html')
     return render_template('upload_report.html')
+
+
+@app.route('/newlab', methods=["GET", "POST"])
+def newlab():
+    if session.get('labname'):
+        return redirect('/index')
+
+    form = RegistrationFormLab()
+
+    if form.validate_on_submit():
+        Email = form.Email.data
+        Password = form.Password.data
+        AadharNo = form.AadharNo.data
+        Name = form.Name.data
+        ContactNo = form.ContactNo.data
+        # Gender = form.Gender.data
+        # CertificateNo = form.CertificateNo.data
+        # print(CertificateNo)
+        lab = create_lab(Email=Email, Name=Name, AadharNo=AadharNo,
+                         ContactNo=ContactNo)
+
+        lab.set_password(Password)
+
+        try:
+            lab.save()
+            flash("New ID Created Successfully", "success")
+            return redirect("/login_doc")
+        except Exception as e:
+            flash("Failed to create user, try again")
+            print(e)
+            return redirect('/newdoctor')
+
+    return render_template('newlab.html', form=form)
+
+
+@app.route('/login_lab', methods=["GET", "POST"])
+def loginlab():
+    if session.get('labname'):
+        return redirect("/Lab")
+
+    form = LoginFormLab()
+    if form.validate_on_submit():
+        Email = form.Email.data
+        global currentLab
+        currentLab = Email
+        print(Email, " ", currentLab)
+        Password = form.Password.data
+
+        lab = Lab.objects(Email=Email).first()
+        if lab and lab.get_password(Password):
+            # session['user_id'] = user.user_id
+            session['labname'] = lab.Email
+            return redirect("/Lab")
+        else:
+            flash("Incorrect username or password")
+    return render_template('login_lab.html', form=form)
+
+
+@app.route('/Lab', methods=["GET", "POST"])
+@login_required
+def lab():
+    form = SearchPatient()
+    if form.validate_on_submit():
+        global AadharNo
+        AadharNo = form.AadharNo.data
+        global patient
+        patient = find_user_by_Aadhar(AadharNo)
+        return redirect('lab_w_patient')
+    return render_template('Lab.html', form=form)
+
+
+@app.route('/lab_info')
+@login_required
+def lab_info():
+    currentlab = session('labname')
+    lab = find_lab_by_id(currentlab)
+    if lab is not None:
+        return render_template('lab_info.html', Name=lab['Name'], Email=lab['Email'],
+                               Aadhar=lab['AadharNo'])
+    else:
+        return render_template('lab_info.html')
+
+
+@app.route('/lab_w_patient')
+@login_required
+def lab_w_patient():
+    return render_template('lab_w_patient.html')
+
+
+@app.route('/info_patient_by_lab')
+@login_required
+def info_patient_by_lab():
+    global patient
+    if patient is not None:
+        emergency_list = list(patient['EmergencyContact'].split(","))
+        return render_template('info_patient.html', Name=patient['Name'], Email=patient['Email'],
+                               Aadhar=patient['AadharNo'], Gender=patient['Gender'], DOB=patient['DOB'],
+                               Contact=patient['ContactNo'], Address=patient['Address'],
+                               e_Name=emergency_list[0], e_Rel=emergency_list[1], e_Contact=emergency_list[2])
+    else:
+        return render_template('info_patient.html')
 
 
 @app.route("/logout")
@@ -412,6 +513,8 @@ def logout():
         session.pop('username')
     if session.get('doctorname') is not None:
         session.pop('doctorname')
+    if session.get('labname') is not None:
+        session.pop('labname')
     logout_user()
     return redirect("/index")
 
