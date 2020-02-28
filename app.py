@@ -1,22 +1,26 @@
 import os
 
+import qrcode
 from bson import ObjectId
 from flask import Flask, render_template, redirect, session, flash, send_file, request, url_for
 from flask_pymongo import PyMongo
 from werkzeug.utils import secure_filename
 from flask_bootstrap import Bootstrap
-from databaseConnections import db_user
+from databaseConnections import db_user, db_lab, db_qr
 from forms import RegistrationFormUser, LoginFormUser, EditUserForm, RegistrationFormDoctor, LoginFormDoctor, \
-    SearchPatient, LoginFormLab, RegistrationFormLab, EntryFormPre, RegistrationFormMd, LoginFormMd
+    SearchPatient, LoginFormLab, RegistrationFormLab, EntryFormPre, RegistrationFormMd, LoginFormMd, \
+    EntryFormPp
 from model.models import Emergency, Address, User, Doctor, USER, Lab, Md
 from query.DoctorQuery import create_doctor, find_doctor_by_id
 from query.LabQuery import find_lab_by_id, create_lab
 from query.MdQuery import create_md, find_user_by_Aadhar_M, find_md_by_id
 from query.NewsQuery import find_latest_news
+from query.PQuery import create_Pp
 from query.UserQuery import create_user, find_user_by_id, get_user_aadhar, update_user, find_user_by_Aadhar, find_user
 from flask_login import LoginManager, login_required, login_user, logout_user, current_user
-from model.models import User
+from model.models import User, Qr
 from query.preQuery import create_pre
+import qrcode.image.svg
 
 app = Flask(__name__)
 Bootstrap(app)
@@ -253,6 +257,11 @@ def currentnews():
     news = find_latest_news()
     return render_template('currentnews.html', news=news)
 
+@app.route('/news')
+def news():
+    news = find_latest_news()
+    return render_template('Normal_news.html', news=news)
+
 
 @app.route('/Trending')
 @login_required
@@ -367,6 +376,45 @@ def info_patient_by_doctor():
                                e_Name=emergency_list[0], e_Rel=emergency_list[1], e_Contact=emergency_list[2])
     else:
         return render_template('info_patient.html')
+
+
+@app.route('/scan_qr', methods=['GET', 'POST'])
+@login_required
+def scan_qr():
+
+    email = session.get('labname')
+    labAadhar = db_lab.find_one({'Email': email})
+    if session.get('labname'):
+        email = session.get('labname')
+        labAadhar = db_lab.find_one({'Email': email})
+        qr = Qr()
+
+        qr.labAadhar = labAadhar['AadharNo']
+        qr.access = False
+        qr.userAadhar = ""
+
+        factory = qrcode.image.svg.SvgImage
+        img = qrcode.make(labAadhar['AadharNo'], image_factory=factory)
+        img.save('static/img/qr.svg')
+
+        try:
+            qr.save()
+        except Exception as e:
+            print(e)
+
+    print("asdasdasdas")
+    if request.method == 'POST':
+        return redirect('upload_report')
+        print("poosososo")
+        if "check" in request.form or 'check' in request.form:
+            print("asda")
+            lb = db_qr.find_one({"labAadhar": labAadhar["AadharNo"]})
+            access = lb["access"]
+
+            if access is True:
+                db_qr.delete_one({"labAadhar": labAadhar['AadharNo']})
+                return redirect('upload_report')
+    return render_template('display_qr.html')
 
 
 @app.route('/upload_report', methods=['GET', 'POST'])
@@ -654,6 +702,31 @@ def info_patient_by_md():
                                e_Name=emergency_list[0], e_Rel=emergency_list[1], e_Contact=emergency_list[2])
     else:
         return render_template('info_patient.html')
+
+
+@app.route("/patientprofile", methods=["GET", "POST"])
+def patientprofile():
+    form = EntryFormPp()
+    u = session.get('username')
+    aadhar = get_user_aadhar(u)
+    if form.validate_on_submit():
+        BloodGroup = form.BloodGroup.data
+        Age = form.Age.data
+        Alergies = form.Alergies.data
+        Weight = form.Weight.data
+        Height = form.Height.data
+        Habits = form.Habits.data
+
+        pp = create_Pp(AadharNo=aadhar, BloodGroup=BloodGroup, Age=Age, Alergies=Alergies, Weight=Weight, Height=Height, Habits=Habits)
+        try:
+            pp.save()
+            flash("New ID Created Successfully", "success")
+            return render_template("login_patient.html", form=form)
+        except Exception as e:
+            flash("Failed to create user, try again")
+            print(e)
+            return render_template('patientprofile.html', form=form)
+    return render_template('patientprofile.html', form=form)
 
 
 @app.route("/logout")

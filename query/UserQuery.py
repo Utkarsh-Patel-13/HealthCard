@@ -14,8 +14,8 @@ def create_user(Email, Name, AadharNo, ContactNo, Gender, DOB, Street1, Street2,
                     Gender=Gender, DOB=DOB, Address=address.__repr__(), EmergencyContact=emergency.__repr__(),
                     Reports=Reports)
 
-
-    new_user.create_user_folder()
+    #
+    # new_user.create_user_folder()
 
     return new_user
 

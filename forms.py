@@ -134,6 +134,17 @@ class RegistrationFormMd(FlaskForm):
     submit = SubmitField(" Register ")
 
 class LoginFormMd(FlaskForm):
-    Email = StringField("Email",validators=[DataRequired(), Email()])
+    Email = StringField("Email", validators=[DataRequired(), Email()])
     Password = PasswordField("Password", validators=[DataRequired(), Length(min=6, max=15)])
     submit = SubmitField("Login")
+
+
+class EntryFormPp(FlaskForm):
+    AadharNo = StringField("Aadhar")
+    BloodGroup = StringField("Enter Blood Group:")
+    Age = StringField("Enter Age:")
+    Alergies = StringField("Allergy List:")
+    Weight = StringField("Enter Weight:")
+    Height = StringField("Enter Height:")
+    Habits = StringField("Habit List")
+    submit = SubmitField(" Register ")

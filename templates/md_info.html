@@ -11,21 +11,53 @@
     <link rel="stylesheet" href="/static/css/animate.css">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
+    <style>
+        body {
+             background-color: #b03d7b;
+              background-image: url(/static/img/background.png);
+    {#background-image: linear-gradient(to right, #fedf7e, #6af2d2, #9d68f2, lightpink);#}
+
+            background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    }
+    .card {
+      box-shadow: 0 -5px 30px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+        background-color: #f0eff2;
+
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+     .bar{
+         background-color: white;
+     }
+
+    .bar:hover {
+    background-color: #0aaaf1;
+        color: white;
+    }
+
+
+    </style>
 </head>
 
 <body>
 
 
-    <div class="container" style="border: 2px solid silver; height: 100vh;">
+ <div class="container card" style=" height: 100vh;margin-top: 2%;background-color: white">
         <div class="row" style="font-size: large; line-height: 4vh; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  padding: 20px 20px 20px 20px;">
             <div class="col-lg-12">
-                <div><strong>Medical Information</strong></div><br>
-                <div>Lab Head : {{ Name }}</div><br>
+                <div><strong>Doctor Information</strong></div><br>
+                <div>Medical Shop : {{ Name }}</div><br>
                 <div>Email : {{ Email }}</div><br>
                 <div>AadharNo : {{ Aadhar }}</div><br>
-               
+
             </div>
-            
+
         </div>
 
     </div>

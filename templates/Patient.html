@@ -16,6 +16,35 @@
     <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
     <!-- Custom styles for this template -->
     <link href="/static/css/simple-sidebar.css" rel="stylesheet">
+    <style>
+        body {
+    background-image: linear-gradient(to right, #6af2d2, #9d68f2);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    }
+    .card {
+      box-shadow: 0 -5px 30px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+        background-color: #f0eff2;
+
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+     .bar{
+         background-color: white;
+     }
+
+    .bar:hover {
+    background-color: #0aaaf1;
+        color: white;
+    }
+
+
+    </style>
 
 </head>
 
@@ -24,15 +53,16 @@
     <div class="d-flex" id="wrapper">
 
         <!-- Sidebar -->
-        <div class="bg-light border-right" id="sidebar-wrapper">
-            <div class="sidebar-heading">MENU</div>
-            <div class="list-group list-group-flush">
-                <a href="{{url_for('Patient_home')}}" target="window" class="list-group-item list-group-item-action bg-light">Home</a>
-                <a href="{{url_for('info_patient')}}" target="window" class="list-group-item list-group-item-action bg-light">Profile</a>
-                <a href="{{url_for('report_patient')}}" target="window" class="list-group-item list-group-item-action bg-light">All Reports</a>
-                <a href="{{url_for('edit_info_patient')}}" target="window" class="list-group-item list-group-item-action bg-light">Edit Profile</a>
-                <a href="{{url_for('Trending')}}" target="window" class="list-group-item list-group-item-action bg-light">Trending</a>
-                <a href="{{url_for('logout')}}" class="list-group-item list-group-item-action bg-light">Log Out</a>
+        <div class="bg-light border-right" id="sidebar-wrapper" style="background-color: white">
+            <div class="sidebar-heading" style="background-color: white">MENU</div>
+            <div class="list-group list-group-flush" style="background-color: white">
+                <a href="{{url_for('Patient_home')}}" target="window" class="list-group-item list-group-item-action bar">Home</a>
+                <a href="{{url_for('info_patient')}}" target="window" class="list-group-item list-group-item-action bar">Profile</a>
+                <a href="{{url_for('report_patient')}}" target="window" class="list-group-item list-group-item-action bar">All Reports</a>
+                <a href="{{url_for('edit_info_patient')}}" target="window" class="list-group-item list-group-item-action bar">Edit Profile</a>
+                <a href="{{url_for('patientprofile')}}" target="window" class="list-group-item list-group-item-action bar">Basic Health</a>
+                <a href="{{url_for('news')}}" target="window" class="list-group-item list-group-item-action bar">News</a>
+                <a href="{{url_for('logout')}}" class="list-group-item list-group-item-action bar">Log Out</a>
             </div>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -40,14 +70,16 @@
         <!-- Page Content -->
         <div id="page-content-wrapper">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                <button class="btn btn-primary" id="menu-toggle">CLICK HERE</button>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" style=" background-image: linear-gradient(to right, #9d68f2, lightpink);">
+                <button class="btn btn-primary" id="menu-toggle"  style="background-color: white;color: black">CLICK HERE</button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 
                         <li class="nav-item active">
-                            Savasthaya Sahayak Your Personal Health Card
+
+                            Savasthaya Sahayak<br> &nbsp;&nbsp;
+                            Your Personal Health Card &nbsp;&nbsp;
                         </li>
                     </ul>
                 </div>
@@ -57,12 +89,7 @@
 
             <!-- <h1 class="mt-4">Simple Sidebar</h1> -->
             <div style="margin: 1px">
-                <iframe src="{{url_for('Patient_home')}}" name="window" style="width:100%;height: 88.3vh;border-style: solid;border-color: silver;margin-top: 0px;margin-left: 0px;">
-
-
-
-
-        </iframe>
+                <iframe src="{{url_for('Patient_home')}}" name="window" style="width:100%;height: 88.3vh;border-style: solid;border-color: silver;margin-top: 0px;margin-left: 0px;"> </iframe>
 
             </div>
             <!-- /#page-content-wrapper -->

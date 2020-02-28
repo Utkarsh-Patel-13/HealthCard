@@ -16,7 +16,30 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/simple-sidebar.css" rel="stylesheet">
+    <style>
 
+    .card {
+      box-shadow: 0 -5px 30px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+        background-color: #f0eff2;
+
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+     .bar{
+         background-color: white;
+     }
+
+    .bar:hover {
+    background-color: #0aaaf1;
+        color: white;
+    }
+
+
+    </style>
 </head>
 
 <body>
@@ -28,7 +51,7 @@
             <div class="sidebar-heading">ALL REPORTS</div>
             <div class="list-group list-group-flush">
                 {% for f in range(files) %}
-                <a href="/return_files/{{f}}" target="window2" class="list-group-item list-group-item-action bg-light current">
+                <a href="/return_files/{{f}}" target="window2" class="list-group-item list-group-item-action bar current">
                 Report {{ f }}</a> {% endfor %}
             </div>
         </div>
@@ -42,7 +65,7 @@
             </nav>
 
             <div style="margin: 1px">
-                <iframe src="{{url_for('Patient_home')}}" name="window2" style="width:100%;height: 91.2vh;border-style: solid;border-color: silver;margin-top: 0px">
+                <iframe src="" name="window2" style="width:100%;height: 91.2vh;border-style: solid;border-color: silver;margin-top: 0px">
                 </iframe>
             </div>
         </div>

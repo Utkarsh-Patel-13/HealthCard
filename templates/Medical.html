@@ -20,20 +20,49 @@
     <link rel="stylesheet" href="/static/css/animate.css">
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="icon" href="/static/img/service.png" type="image/gif" sizes="16x16">
+     <style>
+        body {
+    background-image: linear-gradient(to right, #6af2d2, #9d68f2);
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    }
+    .card {
+      box-shadow: 0 -5px 30px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+        background-color: #f0eff2;
+
+    }
+
+    .card:hover {
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+
+     .bar{
+         background-color: white;
+     }
+
+    .bar:hover {
+    background-color: #0aaaf1;
+        color: white;
+    }
+
+
+    </style>
 </head>
 
 <body>
     <div class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
-    <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">MENU</div>
-      <div class="list-group list-group-flush">
-        <a href="{{url_for('md_info')}}" target="window" class="list-group-item list-group-item-action bg-light">Home</a>
-        <a href="{{url_for('md_info')}}" target="window" class="list-group-item list-group-item-action bg-light">Profile</a>
+    <div class="bg-light border-right" id="sidebar-wrapper" style="background-color: white">
+      <div class="sidebar-heading" style="background-color: white">MENU</div>
+      <div class="list-group list-group-flush" style="background-color: white">
+        <a href="{{url_for('md_info')}}" target="window" class="list-group-item list-group-item-action bar">Home</a>
+{#        <a href="{{url_for('md_info')}}" target="window" class="list-group-item list-group-item-action bar">Profile</a>#}
        <!--  <a href="report_patient.html" target="window" class="list-group-item list-group-item-action bg-light">All Reports</a> -->
-        <a href="{{url_for('currentnews')}}" target="window" class="list-group-item list-group-item-action bg-light">NEWS</a>
-        <a href="{{url_for('logout')}}" class="list-group-item list-group-item-action bg-light">Log Out</a>
+        <a href="{{url_for('currentnews')}}" target="window" class="list-group-item list-group-item-action bar">NEWS</a>
+        <a href="{{url_for('logout')}}" class="list-group-item list-group-item-action bar">Log Out</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -41,34 +70,35 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-        <button class="btn btn-primary" id="menu-toggle">CLICK HERE</button>
+       <nav class="navbar navbar-expand-lg navbar-light  border-bottom" style=" background-image: linear-gradient(to right, #9d68f2, lightpink);">
+                <button class="btn btn-primary" id="menu-toggle" style="background-color: white;color: black">CLICK HERE</button>
 
-        
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-       
-            <form action="#" method="POST">
 
-              <div class="form-group" style="border: 3px solid black; padding: 15px; font-size: 20px; font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
 
-                  <p style="font-size: 30px;"><b>Patient upload {{form.hidden_tag()}}</b></p>
-                  <div>
+                        <form action="#" method="POST" class="card" style="height: 20%;">
 
-                      {{form.AadharNo.label}}<br> {{form.AadharNo}} {% for error in form.AadharNo.errors %}
-                      <br><span class="error msg">{{error}}</span> {% endfor %}
-                      {{form.submit()}}
-                  </div>
-                  
-              </div>    
-            </form>
-                               
-                            
-          </ul>
-        </div>
-        <a class="navbar-brand" href="index.html"> <img src="/static/img/service.png" alt="logo" width="50px" height="50px"> </a>
-      </nav>
+                            <div class="form-group" style=" padding: 15px; font-size: 20px; font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace">
+
+                                <p style="font-size: 30px;"><b>{{form.hidden_tag()}}</b></p>
+
+
+                                   Enter Patient Id<br> {{form.AadharNo(style="border-radius:10px;")}} {% for error in form.AadharNo.errors %}
+                                    <br><span class="error msg">{{error}}</span> {% endfor %}{{form.submit()}}
+
+
+
+                            </div>
+                        </form>
+
+
+                    </ul>
+                </div>
+
+            </nav>
+
 
       
         <!-- <h1 class="mt-4">Simple Sidebar</h1> -->
